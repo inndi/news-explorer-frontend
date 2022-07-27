@@ -1,13 +1,28 @@
+@import url('./vendor/normalize.css');
+@import url('./vendor/fonts/fonts.css');
+@import url('./components/App/App.css');
+@import url('./components/Header/Header.css');
+@import url('./components/Main/Main.css');
+@import url('./components/SearchForm/SearchForm.css');
+@import url('./components/About/About.css');
+@import url('./components/Footer/Footer.css');
+
+
+
 body {
+  /* background-image: url('./images/georgia-de-lotz--UsJoNxLaNo-unsplash.png'); */
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* box-sizing: border-box; */
+  /* font-family: 'Inter', sans-serif;
+  font-weight: 400; */
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */

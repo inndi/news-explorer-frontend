@@ -1,8 +1,8 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 // import logo from './logo.svg';
-import './App.css';
+import '../../index.css';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Main from '../Main/Main';
@@ -16,19 +16,32 @@ import Footer from '../Footer/Footer';
 
 function App() {
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleHomeClick() {
-    history.push('/');
+    navigate.push('/');
   }
 
   function handleSavedArticlesClick() {
-    history.push('/saved-news');
+    navigate.push('/saved-news');
   }
 
   return (
     <div className="App">
-      <Switch>
+      <Header>
+        <div className='header__navigation'>
+          <button className='header__nav-button'>Home</button>
+          <button className='header__nav-button'>Saved articles</button>
+          <button className='header__nav-button header__exit-button'>Elise</button>
+        </div>
+      </Header>
+
+
+      <Main />
+
+      <Footer />
+
+      {/* <Routes>
 
         <Route path='/saved-news'>
           <Header>
@@ -69,7 +82,7 @@ function App() {
           <Footer></Footer>
         </Route>
 
-      </Switch>
+      </Routes> */}
     </div >
   );
 }
