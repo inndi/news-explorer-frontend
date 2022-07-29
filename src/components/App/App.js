@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 // import logo from './logo.svg';
@@ -10,36 +10,76 @@ import SearchForm from '../SearchForm/SearchForm';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import NewsCard from '../NewsCard/NewsCard';
 import Preloader from '../Preloader/Preloader';
-import CardsInfo from '../CardsInfo/CardsInfo';
+import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
 
 function App() {
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const [homeIsActive, setHomeIsActive] = useState(false);
+  const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(true);
 
   const navigate = useNavigate();
 
   function handleHomeClick() {
-    navigate.push('/');
+    navigate('/');
+    setHomeIsActive(true);
+    setSavedArticlesIsActive(false);
   }
 
   function handleSavedArticlesClick() {
-    navigate.push('/saved-news');
+    navigate('/saved-news');
+    setSavedArticlesIsActive(true);
+    setHomeIsActive(false);
   }
 
   return (
     <div className="App">
-      <Header>
-        <div className='header__navigation'>
-          <button className='header__nav-button'>Home</button>
-          <button className='header__nav-button'>Saved articles</button>
-          <button className='header__nav-button header__exit-button'>Elise</button>
-        </div>
-      </Header>
+      <Routes>
+
+        <Route path='/saved-news' element={
+          <div>
+            <Header savedArticlesIsActive={savedArticlesIsActive}>
+              <div className='header__navigation'>
+                <button className='header__nav-button header__nav-button_black' onClick={handleHomeClick}>Home</button>
+                <button className={`header__nav-button header__nav-button_black ${savedArticlesIsActive ? 'header__nav-button_active-black' : ''}`}>Saved articles</button>
+                <button className='header__exit-button header__exit-button_black'>Elise</button>
+              </div>
+            </Header>
+            <SavedNewsHeader />
+            <NewsCardList>
+
+            </NewsCardList>
+            <Footer />
+
+          </div>
+        } />
 
 
-      <Main />
 
-      <Footer />
+
+        <Route path='/' element={
+          <div>
+            <Header>{isAuthorized
+              ?
+              <div className='header__navigation'>
+                <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
+                <button className='header__nav-button' onClick={handleSavedArticlesClick}>Saved articles</button>
+                <button className='header__exit-button'>Elise</button>
+              </div>
+              :
+              <div className='header__navigation'>
+                <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
+                <button className='header__nav-button header__auth-button'>Sign in</button>
+              </div>
+            }
+            </Header>
+            <Main />
+            <Footer />
+          </div>
+        } />
+
+      </Routes>
 
       {/* <Routes>
 

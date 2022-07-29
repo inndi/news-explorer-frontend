@@ -32,13 +32,28 @@
   cursor: pointer;
 }
 
+.header__nav-button_black {
+  color: #000;
+  padding: 0 32px;
+  margin: 0;
+}
+
 .header__nav-button:hover {
   color: #fff;
 }
 
-.header__nav-button_active {
+.header__nav-button_black:hover {
+  color: #000;
+}
+
+.header__nav-button_active-white {
   color: #fff;
   border-bottom: 3px solid #fff;
+}
+
+.header__nav-button_active-black {
+  color: #000;
+  border-bottom: 3px solid #000;
 }
 
 .header__exit-button {
@@ -46,6 +61,7 @@
   min-width: 112px;
   text-align: left;
   padding: 0 0 0 19px;
+  background-color: transparent;
   border: 1px solid #fff;
   border-radius: 30px;
   background-image: url('../../images/header-icon-Union.svg');
@@ -53,9 +69,43 @@
   background-position-y: center;
   background-position-x: 77px;
   color: #fff;
+  cursor: pointer;
 }
+
+.header__exit-button_black {
+  border: 1px solid #000;
+  background-image: url('../../images/header-icon-logout-black.svg');
+  color: #000;
+  margin: 0 32px;
+}
+
+/* .header__auth-button {
+  min-height: 48px;
+  min-width: 112px;
+  text-align: left;
+  padding: 0 0 0 19px;
+  border: 1px solid #000;
+  border-radius: 30px;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: 77px;
+  color: #000;
+} */
 
 .header__exit-button:hover {
   color: #b6bcbf;
   border-color: #b6bcbf;
+}
+
+.header__exit-button_black:hover {
+  color: #000;
+  border-color: #000;
+}
+
+.header__saved-articles {
+  background-color: #fff;
+}
+
+.header__saved-articles-logo {
+  background-image: url('../../images/header-NewsExplorerblack.svg');
 }
