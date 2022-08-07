@@ -1,0 +1,14 @@
+.news-cards {
+  background-color: #F5F6F7;
+}
+
+.news-card__list {
+  padding: 62px 104px;
+  margin: 0;
+  background-color: #F5F6F7;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(224px, 400px));
+  justify-content: space-between;
+  /* justify-content: center; */
+  grid-gap: 16px;
+}

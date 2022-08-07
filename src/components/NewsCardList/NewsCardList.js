@@ -6,6 +6,10 @@ function NewsCardList(params) {
     <section className='news-cards'>
       <ul className='news-card__list'>
         <NewsCard />
+        <NewsCard />
+        <NewsCard />
+        <NewsCard />
+        <NewsCard />
       </ul>
     </section>
   )

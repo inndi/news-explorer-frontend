@@ -102,10 +102,6 @@
   border-color: #000;
 }
 
-.header__saved-articles {
-  background-color: #fff;
-}
-
 .header__saved-articles-logo {
   background-image: url('../../images/header-NewsExplorerblack.svg');
 }
