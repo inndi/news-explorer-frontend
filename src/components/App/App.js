@@ -12,14 +12,9 @@ import inactiveBookmark from '../../images/card-icon-bookmark-inactive.svg';
 import hoverBookmark from '../../images/card-icon-bookmark-hover.svg';
 
 import Header from '../Header/Header';
-import Navigation from '../Navigation/Navigation';
 import Main from '../Main/Main';
-import SearchForm from '../SearchForm/SearchForm';
 import NewsCardList from '../NewsCardList/NewsCardList';
-import NewsCard from '../NewsCard/NewsCard';
-import Preloader from '../Preloader/Preloader';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
-import About from '../About/About';
 import Footer from '../Footer/Footer';
 
 function App() {
