@@ -1,14 +1,18 @@
 import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
-import NewsCardList from '../NewsCardList/NewsCardList';
+import SearchResults from '../SearchResults/SearchResults';
 
 import About from '../About/About';
 
-function Main(params) {
+function Main(props) {
   return (
     <main className='main-content'>
       <SearchForm />
-      {/* <NewsCardList></NewsCardList> */}
+      <SearchResults
+        inactiveBtn={props.inactiveBtn}
+        hoverBtn={props.hoverBtn}
+        homeIsActive={props.homeIsActive}
+      ></SearchResults>
       <About />
     </main>
   )

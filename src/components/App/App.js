@@ -4,6 +4,13 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 // import logo from './logo.svg';
 import '../../index.css';
 import mainBgImage from '../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.png';
+
+import inactiveTrash from '../../images/icon-trash-inactive.svg';
+import hoverTrash from '../../images/card-icon-trash.svg';
+
+import inactiveBookmark from '../../images/card-icon-bookmark-inactive.svg';
+import hoverBookmark from '../../images/card-icon-bookmark-hover.svg';
+
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Main from '../Main/Main';
@@ -48,7 +55,11 @@ function App() {
               </div>
             </Header>
             <SavedNewsHeader />
-            <NewsCardList>
+            <NewsCardList
+              inactiveBtn={inactiveTrash}
+              hoverBtn={hoverTrash}
+              tooltipText='Remove from saved'
+            >
 
             </NewsCardList>
             <Footer />
@@ -75,7 +86,11 @@ function App() {
               </div>
             }
             </Header>
-            <Main />
+            <Main
+              inactiveBtn={inactiveBookmark}
+              hoverBtn={hoverBookmark}
+              homeIsActive={homeIsActive}
+            />
             <Footer />
           </div>
         } />

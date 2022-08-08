@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import propsCardImg from '../../images/card-card-image_06.png';
-import propsInactiveTrash from '../../images/icon-trash-inactive.svg';
-import propsActiveTrash from '../../images/card-icon-trash.svg';
 
-
-function NewsCard(params) {
+function NewsCard(props) {
 
   const [isHover, setIsHover] = useState(false);
 
@@ -15,7 +12,7 @@ function NewsCard(params) {
     setIsHover(false);
   };
   const boxStyle = {
-    backgroundImage: isHover ? `url(${propsActiveTrash})` : `url(${propsInactiveTrash})`
+    backgroundImage: isHover ? `url(${props.hoverBtn})` : `url(${props.inactiveBtn})`
   };
 
   return (
@@ -23,11 +20,11 @@ function NewsCard(params) {
       <div className='card__image-container'>
         <img className='card__image' src={propsCardImg} alt="props-title" />
       </div>
-      <p className='card__keyword element-absolute_style'>propsKeyword</p>
+      {!props.homeIsActive && <p className='card__keyword element-absolute_style'>propsKeyword</p>}
       <button className='card__btn element-absolute_style' style={boxStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}></button>
-      <p className='card__tooltip element-absolute_style'>propsTooltip</p>
+      <p className='card__tooltip element-absolute_style'>{props.tooltipText}</p>
       <div className='card__info-box'>
         <p className='card__date'>November 4, 2020</p>
         <h2 className='card__title'>Everyone Needs a Special 'Sit Spot' in Nature fffffffff fffnhyjn</h2>

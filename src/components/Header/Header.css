@@ -48,12 +48,12 @@
 
 .header__nav-button_active-white {
   color: #fff;
-  border-bottom: 3px solid #fff;
+  box-shadow: inset 0 -3px #fff;
 }
 
 .header__nav-button_active-black {
   color: #000;
-  border-bottom: 3px solid #000;
+  box-shadow: inset 0 -3px #000;
 }
 
 .header__exit-button {
