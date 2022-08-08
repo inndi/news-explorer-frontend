@@ -8,6 +8,7 @@ function SearchResults(props) {
       <NewsCardList
         inactiveBtn={props.inactiveBtn}
         hoverBtn={props.hoverBtn}
+        markedBtn={props.markedBtn}
         tooltipText='Sign in to save articles'
         homeIsActive={props.homeIsActive}
       ></NewsCardList>

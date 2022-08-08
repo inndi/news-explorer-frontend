@@ -10,6 +10,7 @@ import hoverTrash from '../../images/card-icon-trash.svg';
 
 import inactiveBookmark from '../../images/card-icon-bookmark-inactive.svg';
 import hoverBookmark from '../../images/card-icon-bookmark-hover.svg';
+import markedBookmark from '../../images/icon-bookmark-marked.svg';
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -84,6 +85,7 @@ function App() {
             <Main
               inactiveBtn={inactiveBookmark}
               hoverBtn={hoverBookmark}
+              markedBtn={markedBookmark}
               homeIsActive={homeIsActive}
             />
             <Footer />

@@ -26,6 +26,7 @@
 
 .card__keyword {
   left: 24px;
+  font-family: 'Roboto-middle';
   font-weight: 500;
   font-size: 14px;
   padding: 0 22px;
@@ -38,15 +39,17 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  transition: background-image 0.2s linear;
 }
 
 .card__tooltip {
   visibility: hidden;
   right: 69px;
   padding: 0 26px;
+  font-family: 'Roboto-middle';
   font-weight: 500;
   font-size: 12px;
-
+  transition: visibility 0.2s linear;
 }
 
 .card__btn:hover+.card__tooltip {

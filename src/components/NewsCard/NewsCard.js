@@ -4,6 +4,7 @@ import propsCardImg from '../../images/card-card-image_06.png';
 function NewsCard(props) {
 
   const [isHover, setIsHover] = useState(false);
+  const [isMarked, setIsMarked] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -11,8 +12,21 @@ function NewsCard(props) {
   const handleMouseLeave = () => {
     setIsHover(false);
   };
+
+  const handleMouseClick = () => {
+    if (props.homeIsActive && isMarked === false) {
+      setIsMarked(true);
+    } else {
+      setIsMarked(false);
+    }
+  };
+
   const boxStyle = {
     backgroundImage: isHover ? `url(${props.hoverBtn})` : `url(${props.inactiveBtn})`
+  };
+
+  const markedBoxStyle = {
+    backgroundImage: `url(${props.markedBtn})`
   };
 
   return (
@@ -21,9 +35,10 @@ function NewsCard(props) {
         <img className='card__image' src={propsCardImg} alt="props-title" />
       </div>
       {!props.homeIsActive && <p className='card__keyword element-absolute_style'>propsKeyword</p>}
-      <button className='card__btn element-absolute_style' style={boxStyle}
+      <button className='card__btn element-absolute_style' style={isMarked ? markedBoxStyle : boxStyle}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}></button>
+        onMouseLeave={handleMouseLeave}
+        onClick={handleMouseClick}></button>
       <p className='card__tooltip element-absolute_style'>{props.tooltipText}</p>
       <div className='card__info-box'>
         <p className='card__date'>November 4, 2020</p>

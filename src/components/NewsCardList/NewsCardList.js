@@ -6,7 +6,8 @@ function NewsCardList(props) {
     <section className='news-cards'>
       <ul className='news-card__list'>
         <NewsCard inactiveBtn={props.inactiveBtn} hoverBtn={props.hoverBtn}
-          tooltipText={props.tooltipText} homeIsActive={props.homeIsActive} />
+          tooltipText={props.tooltipText} homeIsActive={props.homeIsActive}
+          markedBtn={props.markedBtn} />
         <NewsCard inactiveBtn={props.inactiveBtn} hoverBtn={props.hoverBtn} />
         <NewsCard inactiveBtn={props.inactiveBtn} hoverBtn={props.hoverBtn} />
         <NewsCard inactiveBtn={props.inactiveBtn} hoverBtn={props.hoverBtn} />
