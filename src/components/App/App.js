@@ -17,13 +17,26 @@ import Main from '../Main/Main';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import Footer from '../Footer/Footer';
+import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import RegisterPopup from '../RegisterPopup/RegisterPopup';
+import LoginPopup from '../LoginPopup/LoginPopup';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [homeIsActive, setHomeIsActive] = useState(false);
   const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(true);
 
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
+
+
   const navigate = useNavigate();
+
+  function handleSigninClick() {
+    setIsLoginPopupOpen(true);
+  }
 
   function handleHomeClick() {
     navigate('/');
@@ -37,6 +50,29 @@ function App() {
     setHomeIsActive(false);
   }
 
+  function handleEliseClick() {
+    setIsAuthorized(false);
+    navigate('/');
+  }
+
+  function closeAllPopups() {
+    setIsRegisterPopupOpen(false);
+    setIsLoginPopupOpen(false);
+    setIsInfoTooltipOpen(false);
+  }
+
+  function handleRedirectAuth() {
+    if (isRegisterPopupOpen) {
+      closeAllPopups();
+      setIsLoginPopupOpen(true);
+      setIsRegisterPopupOpen(false);
+    } else if (isLoginPopupOpen) {
+      closeAllPopups();
+      setIsRegisterPopupOpen(true);
+      setIsLoginPopupOpen(false);
+    }
+  }
+
   return (
     <div className='App' style={savedArticlesIsActive ? { backgroundImage: 'none' } : { backgroundImage: `url(${mainBgImage})` }}>
       <Routes>
@@ -47,7 +83,7 @@ function App() {
               <div className='header__navigation'>
                 <button className='header__nav-button header__nav-button_black' onClick={handleHomeClick}>Home</button>
                 <button className={`header__nav-button header__nav-button_black ${savedArticlesIsActive ? 'header__nav-button_active-black' : ''}`}>Saved articles</button>
-                <button className='header__exit-button header__exit-button_black'>Elise</button>
+                <button className='header__exit-button header__exit-button_black' onClick={handleEliseClick}>Elise</button>
               </div>
             </Header>
             <SavedNewsHeader />
@@ -64,11 +100,10 @@ function App() {
         } />
 
 
-
-
         <Route path='/' element={
           <div>
-            <Header>{isAuthorized
+            <Header
+            >{isAuthorized
               ?
               <div className='header__navigation'>
                 <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
@@ -78,9 +113,9 @@ function App() {
               :
               <div className='header__navigation'>
                 <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
-                <button className='header__nav-button header__auth-button'>Sign in</button>
+                <button className='header__nav-button header__auth-button' onClick={handleSigninClick}>Sign in</button>
               </div>
-            }
+              }
             </Header>
             <Main
               inactiveBtn={inactiveBookmark}
@@ -89,53 +124,30 @@ function App() {
               homeIsActive={homeIsActive}
             />
             <Footer />
+            <RegisterPopup
+              isOpen={isRegisterPopupOpen}
+              onClose={closeAllPopups}
+              onRedirect={handleRedirectAuth}
+            ></RegisterPopup>
+
+            <LoginPopup
+              isOpen={isLoginPopupOpen}
+              onClose={closeAllPopups}
+              onRedirect={handleRedirectAuth}
+            ></LoginPopup>
+
+            <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              onClose={closeAllPopups}
+              onRedirect={handleRedirectAuth}
+              title='Registration successfully completed!'
+              redirectText='Sign in'
+            ></InfoTooltip>
+
           </div>
         } />
 
       </Routes>
-
-      {/* <Routes>
-
-        <Route path='/saved-news'>
-          <Header>
-            <Navigation>
-              ? :
-            </Navigation>
-          </Header>
-
-          <Main>
-            <CardsInfo></CardsInfo>
-
-            <NewsCardList>
-              <NewsCard></NewsCard>
-            </NewsCardList>
-          </Main>
-
-          <Footer></Footer>
-        </Route>
-
-        <Route path='/'>
-
-          <Header>
-            <Navigation></Navigation>
-          </Header>
-
-          <Main>
-            <SearchForm>
-              <NewsCardList>
-                <NewsCard></NewsCard>
-              </NewsCardList>
-
-              <Preloader></Preloader>
-            </SearchForm>
-
-            <About></About>
-          </Main>
-
-          <Footer></Footer>
-        </Route>
-
-      </Routes> */}
     </div >
   );
 }
