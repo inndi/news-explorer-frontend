@@ -7,9 +7,11 @@ function About(params) {
       <div className='about-author__avatar-container'>
         <img className='about-author__avatar' src={authorAvatar} alt="girl sitting on the grass" />
       </div>
-      <h2 className='about-author__title'>About the author</h2>
-      <p className='about-author__content about-author__content_projects-describe'>This block describes the project author. Here you should indicate your name, what you do, and which development technologies you know.</p>
-      <p className='about-author__content about-author__content_experience'>You can also talk about your experience with Practicum, what you learned there, and how you can help potential customers.</p>
+      <div className='about-author__info'>
+        <h2 className='about-author__title'>About the author</h2>
+        <p className='about-author__content about-author__content_projects-describe'>This block describes the project author. Here you should indicate your name, what you do, and which development technologies you know.</p>
+        <p className='about-author__content about-author__content_experience'>You can also talk about your experience with Practicum, what you learned there, and how you can help potential customers.</p>
+      </div>
     </section>
   )
 }
