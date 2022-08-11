@@ -21,14 +21,17 @@
   background-position-y: center;
 }
 
-.header__navigation {
+.header__navigation-list {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.header__nav-button {
+.header__nav-item {
   color: #b6bcbf;
   height: 80px;
   background-color: transparent;
@@ -37,33 +40,34 @@
   margin: 0 17px;
   cursor: pointer;
   transition: color 0.2s linear;
+  line-height: 80px;
 }
 
-.header__nav-button_black {
+.header__nav-item_black {
   color: #000;
   padding: 0 32px;
   margin: 0;
 }
 
-.header__nav-button:hover {
+.header__nav-item:hover {
   color: #fff;
 }
 
-.header__nav-button_black:hover {
+.header__nav-item_black:hover {
   color: #000;
 }
 
-.header__nav-button_active-white {
+.header__nav-item_active-white {
   color: #fff;
   box-shadow: inset 0 -3px #fff;
 }
 
-.header__nav-button_active-black {
+.header__nav-item_active-black {
   color: #000;
   box-shadow: inset 0 -3px #000;
 }
 
-.header__exit-button {
+.header__exit-item {
   height: 48px;
   width: 112px;
   text-align: left;
@@ -80,16 +84,17 @@
   transition: all 0.2s linear;
   transition-property: color, border-color;
   margin-left: 32px;
+  line-height: 48px;
 }
 
-.header__exit-button_black {
+.header__exit-item_black {
   border: 1px solid #000;
   background-image: url('../../images/header-icon-logout-black.svg');
   color: #000;
   margin-left: 32px;
 }
 
-.header__auth-button {
+.header__auth-item {
   height: 48px;
   width: 176px;
   text-align: center;
@@ -99,15 +104,16 @@
   color: #fff;
   transition: all 0.2s linear;
   transition-property: color, border-color;
+  line-height: 48px;
 }
 
-.header__exit-button:hover,
-.header__auth-button:hover {
+.header__exit-item:hover,
+.header__auth-item:hover {
   color: #b6bcbf;
   border-color: #b6bcbf;
 }
 
-.header__exit-button_black:hover {
+.header__exit-item_black:hover {
   color: #000;
   border-color: #000;
 }
@@ -126,24 +132,26 @@
     min-width: 204px;
   }
 
-  .header__nav-button {
+  .header__nav-item {
     font-size: 16px;
     height: 66px;
-
+    line-height: 66px;
   }
 
-  .header__exit-button {
+  .header__exit-item {
     height: 40px;
     width: 100px;
     background-position-x: 67px;
     padding: 0 0 0 15px;
     margin-left: 16px;
+    line-height: 40px;
   }
 
-  .header__auth-button {
+  .header__auth-item {
     height: 40px;
     width: 152px;
     margin-left: 16px;
+    line-height: 40px;
   }
 }
 
@@ -159,11 +167,11 @@
     background-image: url('../../images/mobile-NewsExplorer-mobile.svg');
   }
 
-  .header__nav-container:hover {
+  .header__navigation:hover {
     opacity: 1;
   }
 
-  .header__navigation {
+  .header__navigation-list {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.2s linear;
@@ -195,7 +203,7 @@
     z-index: 2;
   }
 
-  .header__nav-container {
+  .header__navigation {
     width: 24px;
     height: 24px;
     background-image: url('../../images/mobile-icon-menu-nav-mobile.svg');
@@ -207,12 +215,12 @@
     cursor: pointer;
   }
 
-  .overlay_active .header__nav-container {
+  .overlay_active .header__navigation {
     opacity: 1;
     background-image: url('../../images/icons-black-back.svg');
   }
 
-  .overlay_active .header__navigation {
+  .overlay_active .header__navigation-list {
     visibility: visible;
     opacity: 1;
     cursor: auto;
@@ -226,19 +234,19 @@
     background-image: url('../../images/mobile-icon-menu-mobile-black.svg');
   }
 
-  .header__nav-button {
+  .header__nav-item {
     font-size: 16px;
     align-self: flex-start;
     margin-left: 16px;
     padding: 0;
   }
 
-  .header__nav-button_active-white {
+  .header__nav-item_active-white {
     color: #fff;
     box-shadow: none;
   }
 
-  .header__exit-button {
+  .header__exit-item {
     height: 56px;
     width: 288px;
     background-position-x: 67px;
@@ -247,30 +255,32 @@
     text-align: center;
     background-position-x: 175px;
     transition: opacity .2s linear;
+    line-height: 56px;
   }
 
-  .header__auth-button {
+  .header__auth-item {
     align-self: center;
     height: 56px;
     width: 288px;
     background-position-x: 67px;
     padding: 0;
     margin: 0;
+    line-height: 56px;
   }
 
-  .header__exit-button_black {
+  .header__exit-item_black {
     border: 1px solid #fff;
     background-image: url('../../images/header-icon-Union.svg');
     color: #fff;
   }
 
-  .header__exit-button:hover {
+  .header__exit-item:hover {
     color: #fff;
     border-color: #fff;
     opacity: .5;
   }
 
-  .header__nav-button_black {
+  .header__nav-item_black {
     color: #fff;
     padding: 0 16px;
     margin: 0;
@@ -278,13 +288,13 @@
     transition: opacity .2s linear;
   }
 
-  .header__nav-button_active-black {
+  .header__nav-item_active-black {
     color: #fff;
     opacity: 1;
     box-shadow: none;
   }
 
-  .header__nav-button_black:hover {
+  .header__nav-item_black:hover {
     color: #fff;
     opacity: 1;
   }

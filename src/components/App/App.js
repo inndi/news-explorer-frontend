@@ -82,11 +82,11 @@ function App() {
         <Route path='/saved-news' element={
           <div>
             <Header savedArticlesIsActive={savedArticlesIsActive}>
-              <div className='header__navigation'>
-                <button className='header__nav-button header__nav-button_black' onClick={handleHomeClick}>Home</button>
-                <button className={`header__nav-button header__nav-button_black ${savedArticlesIsActive ? 'header__nav-button_active-black' : ''}`}>Saved articles</button>
-                <button className='header__exit-button header__exit-button_black' onClick={handleEliseClick}>Elise</button>
-              </div>
+              <ul className='header__navigation-list'>
+                <li className='header__nav-item header__nav-item_black' onClick={handleHomeClick}>Home</li>
+                <li className={`header__nav-item header__nav-item_black ${savedArticlesIsActive ? 'header__nav-item_active-black' : ''}`}>Saved articles</li>
+                <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
+              </ul>
             </Header>
             <SavedNewsHeader />
             <NewsCardList
@@ -106,16 +106,16 @@ function App() {
             <Header
             >{isAuthorized
               ?
-              <div className='header__navigation'>
-                <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
-                <button className='header__nav-button' onClick={handleSavedArticlesClick}>Saved articles</button>
-                <button className='header__exit-button' onClick={handleEliseClick}>Elise</button>
-              </div>
+              <ul className='header__navigation-list'>
+                <li className={`header__nav-item ${homeIsActive ? 'header__nav-item_active-white' : ''}`}>Home</li>
+                <li className='header__nav-item' onClick={handleSavedArticlesClick}>Saved articles</li>
+                <li className='header__exit-item' onClick={handleEliseClick}>Elise</li>
+              </ul>
               :
-              <div className='header__navigation'>
-                <button className='header__nav-button header__nav-button_active-white'>Home</button>
-                <button className='header__nav-button header__auth-button' onClick={handleSigninClick}>Sign in</button>
-              </div>
+              <ul className='header__navigation-list'>
+                <li className='header__nav-item header__nav-item_active-white'>Home</li>
+                <li className='header__nav-item header__auth-item' onClick={handleSigninClick}>Sign in</li>
+              </ul>
               }
             </Header>
             <Main
