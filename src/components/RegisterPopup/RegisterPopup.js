@@ -10,6 +10,7 @@ function RegisterPopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onRedirect={props.onRedirect}
+      onRegisterSubmit={props.onRegisterSubmit}
     >
       <div className='popup__field-container'>
         <p className="popup__field-description">Email</p>

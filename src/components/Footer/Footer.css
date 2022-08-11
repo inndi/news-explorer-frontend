@@ -100,10 +100,9 @@
 
 @media screen and (max-width: 766px) {
   .footer {
-    min-height: 176px;
+    max-height: 176px;
     flex-direction: column-reverse;
     padding: 20px 0 22px;
-
   }
 
   .footer__navigation {

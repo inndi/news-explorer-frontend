@@ -7,10 +7,8 @@ function Header(props) {
   function handleMenuClick() {
     if (isVisibleMenu) {
       setIsVisibleMenu(false);
-      console.log('bla1');
     } else {
       setIsVisibleMenu(true);
-      console.log('bla2');
     }
   }
 

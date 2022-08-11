@@ -29,12 +29,17 @@ function App() {
 
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(true);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
 
   const navigate = useNavigate();
 
   function handleSigninClick() {
     setIsLoginPopupOpen(true);
+  }
+
+  function handleRegistrationSubmitClick() {
+    setIsRegistrationSuccessful(true);
   }
 
   function handleHomeClick() {
@@ -60,6 +65,7 @@ function App() {
     setIsRegisterPopupOpen(false);
     setIsLoginPopupOpen(false);
     setIsInfoTooltipOpen(false);
+    setIsRegistrationSuccessful(false);
   }
 
   function handleRedirectAuth() {
@@ -96,7 +102,8 @@ function App() {
             >
 
             </NewsCardList>
-            <Footer />
+            <Footer
+              handleHomeClick={handleHomeClick} />
 
           </div>
         } />
@@ -129,6 +136,7 @@ function App() {
               isOpen={isRegisterPopupOpen}
               onClose={closeAllPopups}
               onRedirect={handleRedirectAuth}
+              onRegisterSubmit={handleRegistrationSubmitClick}
             ></RegisterPopup>
 
             <LoginPopup
@@ -137,13 +145,17 @@ function App() {
               onRedirect={handleRedirectAuth}
             ></LoginPopup>
 
-            {/* <InfoTooltip
-              isOpen={isInfoTooltipOpen}
-              onClose={closeAllPopups}
-              onRedirect={handleRedirectAuth}
-              title='Registration successfully completed!'
-              redirectText='Sign in'
-            ></InfoTooltip> */}
+            {(isRegistrationSuccessful)
+              &&
+              <InfoTooltip
+                isOpen={isInfoTooltipOpen}
+                onClose={closeAllPopups}
+                onRedirect={handleRedirectAuth}
+                title='Registration successfully completed!'
+                redirectText='Sign in'
+              ></InfoTooltip>
+            }
+
 
           </div>
         } />
