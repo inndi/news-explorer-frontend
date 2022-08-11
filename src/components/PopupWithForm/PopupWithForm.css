@@ -1,0 +1,136 @@
+.popup__field-container :last-child {
+  padding-bottom: 0;
+}
+
+.popup__title {
+  margin: 0;
+  padding-top: 34px;
+  padding-bottom: 22px;
+  font-family: 'Roboto-bold';
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.2;
+  width: 360px;
+}
+
+.popup__field-description {
+  margin: 0;
+  padding-bottom: 9px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #2F71E5;
+}
+
+.popup__field {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding: 0;
+  margin-bottom: 3px;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  padding-bottom: 7px;
+  width: 358px;
+  text-align: start;
+  color: #000;
+}
+
+.popup__error-container {
+  padding-bottom: 13px;
+  width: 358px;
+  /* visibility: hidden;
+  opacity: 0; */
+  transition: opacity 0.2s linear;
+}
+
+.popup__error-container_submit {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+.popup__field-error {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #FF0000;
+}
+
+.popup__submit-btn {
+  border: none;
+  padding: 0;
+  width: 360px;
+  height: 64px;
+  background-color: #2F71E5;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+  border-radius: 100px;
+  font-family: 'Roboto-middle';
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.popup__submit-btn_disabled {
+  background-color: #E6E8EB;
+  color: #B6BCBF;
+}
+
+.popup__redirect-str {
+  width: 360px;
+  padding-top: 16px;
+  margin: 0;
+  text-align: center;
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  margin-bottom: 28px;
+}
+
+.popup__redirect-link {
+  color: #2F71E5;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1106px) {
+  .popup__title {
+    width: 358px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .popup__field-container :last-child {
+    padding-bottom: 0;
+  }
+
+  .popup__title {
+    padding-top: 16px;
+    padding-bottom: 18px;
+    width: 280px;
+  }
+
+  .popup__field {
+    width: 100%;
+  }
+
+  .popup__error-container {
+    width: 100%;
+  }
+
+  .popup__error-container_submit {
+    width: 100%;
+  }
+
+  .popup__submit-btn {
+    width: 100%;
+  }
+
+  .popup__redirect-str {
+    width: 100%;
+  }
+}

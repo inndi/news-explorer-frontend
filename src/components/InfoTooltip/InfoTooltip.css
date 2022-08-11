@@ -1,0 +1,28 @@
+.popup__link-tooltip {
+  width: 360px;
+  padding-top: 14px;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #2F71E5;
+  cursor: pointer;
+  margin-bottom: 47px;
+}
+
+.popup__title_tooltip {
+  padding: 43px 0 0;
+}
+
+@media screen and (max-width: 1106px) {
+  .popup__link-tooltip {
+    width: 358px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .popup__link-tooltip {
+    width: 100%;
+  }
+}

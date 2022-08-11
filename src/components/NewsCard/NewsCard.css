@@ -5,11 +5,13 @@
 
 .card__image-container {
   max-height: 272px;
+  margin-bottom: -5px;
 }
 
 .card__image {
   border-radius: 16px 16px 0 0;
   width: 100%;
+  height: auto;
 }
 
 .element-absolute_style {
@@ -108,4 +110,46 @@
   letter-spacing: 0.4px;
   text-transform: uppercase;
   color: #b6bcbf;
+}
+
+@media screen and (max-width: 1106px) {
+  .element-absolute_style {
+    top: 8px;
+  }
+
+  .card__keyword {
+    left: 8px;
+    padding: 0 20px;
+  }
+
+  .card__btn {
+    right: 8px;
+  }
+
+  .card__tooltip {
+    right: 54px;
+    padding: 0 20px;
+  }
+
+  .card__info-box {
+    padding: 16px;
+  }
+
+  .card__date {
+    margin-bottom: 12px;
+  }
+
+  .card__title {
+    min-height: 72px;
+    font-size: 22px;
+    line-height: 1.1;
+    -webkit-line-clamp: 3;
+    margin-bottom: 10px;
+  }
+
+  .card__text {
+    min-height: 88px;
+    -webkit-line-clamp: 4;
+    margin-bottom: 12px;
+  }
 }

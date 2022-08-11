@@ -11,7 +11,7 @@ function PopupWithForm(props) {
       <form className='popup__form' action="">
         {props.children}
         <div className="popup__error-container popup__error-container_submit">
-          <span className="popup__field-error avaLink//////////////////////-field-error">errors.someError</span>
+          <span className="popup__field-error form-field-error">errors.someError</span>
         </div>
         <button className='popup__submit-btn'>{props.submitText}</button>
         <p className='popup__redirect-str'>or

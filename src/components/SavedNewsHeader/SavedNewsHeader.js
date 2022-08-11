@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SavedNewsHeader(params) {
+function SavedNewsHeader(props) {
   return (
     <section className='saved-news-info'>
       <p className='saved-news-info__subtitle'>Saved articles</p>

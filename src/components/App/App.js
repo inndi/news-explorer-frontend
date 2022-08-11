@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import Favicon from "react-favicon";
 
-// import logo from './logo.svg';
 import '../../index.css';
-import mainBgImage from '../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.png';
 
 import inactiveTrash from '../../images/icon-trash-inactive.svg';
 import hoverTrash from '../../images/card-icon-trash.svg';
@@ -12,25 +11,25 @@ import inactiveBookmark from '../../images/card-icon-bookmark-inactive.svg';
 import hoverBookmark from '../../images/card-icon-bookmark-hover.svg';
 import markedBookmark from '../../images/icon-bookmark-marked.svg';
 
+import favicon from '../../images/Favicon.svg';
+
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import Footer from '../Footer/Footer';
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [homeIsActive, setHomeIsActive] = useState(false);
-  const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(true);
+  const [homeIsActive, setHomeIsActive] = useState(true);
+  const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(false);
 
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
-
 
   const navigate = useNavigate();
 
@@ -52,6 +51,8 @@ function App() {
 
   function handleEliseClick() {
     setIsAuthorized(false);
+    setSavedArticlesIsActive(false);
+    setHomeIsActive(true);
     navigate('/');
   }
 
@@ -74,7 +75,8 @@ function App() {
   }
 
   return (
-    <div className='App' style={savedArticlesIsActive ? { backgroundImage: 'none' } : { backgroundImage: `url(${mainBgImage})` }}>
+    <div className={`App ${savedArticlesIsActive ? 'app__bg_white' : 'app__bg_img'}`} >
+      <Favicon url={favicon}></Favicon>
       <Routes>
 
         <Route path='/saved-news' element={
@@ -99,7 +101,6 @@ function App() {
           </div>
         } />
 
-
         <Route path='/' element={
           <div>
             <Header
@@ -108,11 +109,11 @@ function App() {
               <div className='header__navigation'>
                 <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
                 <button className='header__nav-button' onClick={handleSavedArticlesClick}>Saved articles</button>
-                <button className='header__exit-button'>Elise</button>
+                <button className='header__exit-button' onClick={handleEliseClick}>Elise</button>
               </div>
               :
               <div className='header__navigation'>
-                <button className={`header__nav-button ${homeIsActive ? 'header__nav-button_active-white' : ''}`}>Home</button>
+                <button className='header__nav-button header__nav-button_active-white'>Home</button>
                 <button className='header__nav-button header__auth-button' onClick={handleSigninClick}>Sign in</button>
               </div>
               }
@@ -136,13 +137,13 @@ function App() {
               onRedirect={handleRedirectAuth}
             ></LoginPopup>
 
-            <InfoTooltip
+            {/* <InfoTooltip
               isOpen={isInfoTooltipOpen}
               onClose={closeAllPopups}
               onRedirect={handleRedirectAuth}
               title='Registration successfully completed!'
               redirectText='Sign in'
-            ></InfoTooltip>
+            ></InfoTooltip> */}
 
           </div>
         } />

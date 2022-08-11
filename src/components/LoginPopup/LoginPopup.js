@@ -15,12 +15,12 @@ function RegisterPopup(props) {
         <p className="popup__field-description">Email</p>
         <input className='popup__field' type="email" placeholder='Enter email' />
         <div className="popup__error-container">
-          <span className="popup__field-error avaLink////////////////////-field-error">errors.someError</span>
+          <span className="popup__field-error email-field-error">errors.someError</span>
         </div>
         <p className="popup__field-description">Password</p>
         <input className='popup__field' type="password" placeholder='Enter password' />
         <div className="popup__error-container">
-          <span className="popup__field-error avaLink/////////////////////-field-error">errors.someError</span>
+          <span className="popup__field-error password-field-error">errors.someError</span>
         </div>
       </div>
     </PopupWithForm>
