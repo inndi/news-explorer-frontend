@@ -153,7 +153,6 @@
     padding: 0 16px;
     transition: background-color .2s linear;
     position: relative;
-    z-index: 2;
   }
 
   .header__logo {
@@ -193,6 +192,7 @@
 
   .overlay_active .header {
     background-color: #1A1B22;
+    z-index: 2;
   }
 
   .header__nav-container {
@@ -243,7 +243,7 @@
     width: 288px;
     background-position-x: 67px;
     padding: 0;
-    margin: 0 16px;
+    margin: 0;
     text-align: center;
     background-position-x: 175px;
     transition: opacity .2s linear;
@@ -255,7 +255,7 @@
     width: 288px;
     background-position-x: 67px;
     padding: 0;
-    margin: 0 16px;
+    margin: 0;
   }
 
   .header__exit-button_black {
