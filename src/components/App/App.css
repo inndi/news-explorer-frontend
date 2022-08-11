@@ -19,38 +19,38 @@ body {
   margin: 0 auto;
 }
 
-.app__bg_white {
+.app_bg-white {
   background-image: none;
   background-color: #fff;
 }
 
-.app__bg_img {
+.app_bg-img {
   background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 @media screen and (max-width: 1436px) {
-  .app__bg_img {
+  .app_bg-img {
     background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash-biger.png');
   }
 }
 
 @media screen and (max-width: 780px) {
-  .app__bg_img {
+  .app_bg-img {
     background-size: initial;
   }
 }
 
 @media screen and (max-width: 766px) {
-  .app__bg_img {
+  .app_bg-img {
     background-size: contain;
     background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash-mobile.png');
   }
 }
 
 @media screen and (max-width: 336px) {
-  .app__bg_img {
+  .app_bg-img {
     background-size: initial;
   }
 }

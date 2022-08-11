@@ -16,7 +16,7 @@ function PopupWithForm(props) {
       <h2 className='popup__title'>{props.title}</h2>
       <form className='popup__form' action="">
         {props.children}
-        <div className="popup__error-container popup__error-container_submit">
+        <div className="popup__error-container popup__submit-error">
           <span className="popup__field-error form-field-error">errors.someError</span>
         </div>
         <button className='popup__submit-btn' onSubmit={handleOnRegister}>{props.submitText}</button>

@@ -34,12 +34,12 @@ function NewsCard(props) {
       <div className='card__image-container'>
         <img className='card__image' src={propsCardImg} alt="props-title" />
       </div>
-      {!props.homeIsActive && <p className='card__keyword element-absolute_style'>propsKeyword</p>}
-      <button className='card__btn element-absolute_style' style={isMarked ? markedBoxStyle : boxStyle}
+      {!props.homeIsActive && <p className='card__keyword card__item_absolute'>propsKeyword</p>}
+      <button className='card__btn card__item_absolute' style={isMarked ? markedBoxStyle : boxStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleMouseClick}></button>
-      <p className='card__tooltip element-absolute_style'>{props.tooltipText}</p>
+      <p className='card__tooltip card__item_absolute'>{props.tooltipText}</p>
       <div className='card__info-box'>
         <p className='card__date'>November 4, 2020</p>
         <h2 className='card__title'>Everyone Needs a Special 'Sit Spot' in Nature fffffffff fffnhyjn</h2>

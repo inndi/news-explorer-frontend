@@ -81,7 +81,7 @@ function App() {
   }
 
   return (
-    <div className={`App ${savedArticlesIsActive ? 'app__bg_white' : 'app__bg_img'}`} >
+    <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
       <Favicon url={favicon}></Favicon>
       <Routes>
 
