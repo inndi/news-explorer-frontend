@@ -1,0 +1,155 @@
+.card {
+  list-style: none;
+  position: relative;
+}
+
+.card__image-container {
+  max-height: 272px;
+  margin-bottom: -5px;
+}
+
+.card__image {
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  height: auto;
+}
+
+.card__item_absolute {
+  height: 40px;
+  top: 24px;
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  line-height: 40px;
+}
+
+.card__keyword {
+  left: 24px;
+  font-family: 'Roboto-middle', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 22px;
+}
+
+.card__btn {
+  right: 24px;
+  width: 40px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: background-image 0.2s linear;
+}
+
+.card__tooltip {
+  opacity: 0;
+  right: 69px;
+  padding: 0 26px;
+  font-family: 'Roboto-middle', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  transition: opacity 0.2s linear;
+}
+
+.card__btn:hover+.card__tooltip {
+  opacity: 1;
+}
+
+.card__info-box {
+  padding: 17px 24px 24px;
+  background-color: #fff;
+  border-radius: 0 0 16px 16px;
+}
+
+.card__date {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.3;
+  color: #b6bcbf;
+  margin-bottom: 15px;
+}
+
+.card__title {
+  margin: 0;
+  min-height: 60px;
+  font-family: 'Roboto-slab', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 16px;
+}
+
+.card__text {
+  min-height: 110px;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.card__source {
+  margin: 0;
+  font-family: 'Roboto-slab', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.3;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #b6bcbf;
+}
+
+@media screen and (max-width: 1106px) {
+  .card__item_absolute {
+    top: 8px;
+  }
+
+  .card__keyword {
+    left: 8px;
+    padding: 0 20px;
+  }
+
+  .card__btn {
+    right: 8px;
+  }
+
+  .card__tooltip {
+    right: 54px;
+    padding: 0 20px;
+  }
+
+  .card__info-box {
+    padding: 16px;
+  }
+
+  .card__date {
+    margin-bottom: 12px;
+  }
+
+  .card__title {
+    min-height: 72px;
+    font-size: 22px;
+    line-height: 1.1;
+    -webkit-line-clamp: 3;
+    margin-bottom: 10px;
+  }
+
+  .card__text {
+    min-height: 88px;
+    -webkit-line-clamp: 4;
+    margin-bottom: 12px;
+  }
+}

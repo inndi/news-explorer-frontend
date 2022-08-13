@@ -1,0 +1,56 @@
+body {
+  background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash-mobile.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.App {
+  max-width: 1440px;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  color: #1A1B22;
+  margin: 0 auto;
+}
+
+.app_bg-white {
+  background-image: none;
+  background-color: #fff;
+}
+
+.app_bg-img {
+  background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media screen and (max-width: 1436px) {
+  .app_bg-img {
+    background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash-biger.png');
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .app_bg-img {
+    background-size: initial;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .app_bg-img {
+    background-size: contain;
+    background-image: url('../../images/georgia-de-lotz--UsJoNxLaNo-unsplash-mobile.png');
+  }
+}
+
+@media screen and (max-width: 336px) {
+  .app_bg-img {
+    background-size: initial;
+  }
+}

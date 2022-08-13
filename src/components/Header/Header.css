@@ -1,0 +1,305 @@
+.header {
+  font-family: 'Roboto-middle', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  box-sizing: border-box;
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #d1d2d6;
+  padding: 0 104px;
+}
+
+.header__logo {
+  min-height: 50px;
+  min-width: 304px;
+  background-image: url('../../images/header-NewsExplorer.svg');
+  background-repeat: no-repeat;
+  align-self: center;
+  background-position-y: center;
+}
+
+.header__navigation-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__nav-item {
+  color: #b6bcbf;
+  height: 80px;
+  background-color: transparent;
+  border: none;
+  padding: 0 15px;
+  margin: 0 17px;
+  cursor: pointer;
+  transition: color 0.2s linear;
+  line-height: 80px;
+}
+
+.header__nav-item_black {
+  color: #000;
+  padding: 0 32px;
+  margin: 0;
+}
+
+.header__nav-item:hover {
+  color: #fff;
+}
+
+.header__nav-item_black:hover {
+  color: #000;
+}
+
+.header__nav-item_active-white {
+  color: #fff;
+  box-shadow: inset 0 -3px #fff;
+}
+
+.header__nav-item_active-black {
+  color: #000;
+  box-shadow: inset 0 -3px #000;
+}
+
+.header__exit-item {
+  height: 48px;
+  width: 112px;
+  text-align: left;
+  padding: 0 0 0 19px;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 100px;
+  background-image: url('../../images/header-icon-Union.svg');
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: 77px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  transition-property: color, border-color;
+  margin-left: 32px;
+  line-height: 48px;
+}
+
+.header__exit-item_black {
+  border: 1px solid #000;
+  background-image: url('../../images/header-icon-logout-black.svg');
+  color: #000;
+  margin-left: 32px;
+}
+
+.header__auth-item {
+  height: 48px;
+  width: 176px;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 100px;
+  color: #fff;
+  transition: all 0.2s linear;
+  transition-property: color, border-color;
+  line-height: 48px;
+}
+
+.header__exit-item:hover,
+.header__auth-item:hover {
+  color: #b6bcbf;
+  border-color: #b6bcbf;
+}
+
+.header__exit-item_black:hover {
+  color: #000;
+  border-color: #000;
+}
+
+.header__saved-articles-logo {
+  background-image: url('../../images/header-NewsExplorerblack.svg');
+}
+
+@media screen and (max-width: 1106px) {
+  .header {
+    min-height: 66px;
+    padding: 0 40px;
+  }
+
+  .header__logo {
+    min-width: 204px;
+  }
+
+  .header__nav-item {
+    font-size: 16px;
+    height: 66px;
+    line-height: 66px;
+  }
+
+  .header__exit-item {
+    height: 40px;
+    width: 100px;
+    background-position-x: 67px;
+    padding: 0 0 0 15px;
+    margin-left: 16px;
+    line-height: 40px;
+  }
+
+  .header__auth-item {
+    height: 40px;
+    width: 152px;
+    margin-left: 16px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .header {
+    min-height: 56px;
+    padding: 0 16px;
+    transition: background-color .2s linear;
+    position: relative;
+  }
+
+  .header__logo {
+    background-image: url('../../images/mobile-NewsExplorer-mobile.svg');
+  }
+
+  .header__navigation:hover {
+    opacity: 1;
+  }
+
+  .header__navigation-list {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    background-color: #1A1B22;
+    position: absolute;
+    width: 100%;
+    top: 56px;
+    left: 0;
+    z-index: 2;
+    flex-direction: column;
+    padding-bottom: 24px;
+  }
+
+  .overlay_active::before {
+    content: ' ';
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, .5);
+    cursor: auto;
+  }
+
+  .overlay_active .header {
+    background-color: #1A1B22;
+    z-index: 2;
+  }
+
+  .header__navigation {
+    width: 24px;
+    height: 24px;
+    background-image: url('../../images/mobile-icon-menu-nav-mobile.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: center;
+    opacity: 0.5;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+  }
+
+  .overlay_active .header__navigation {
+    opacity: 1;
+    background-image: url('../../images/icons-black-back.svg');
+  }
+
+  .overlay_active .header__navigation-list {
+    visibility: visible;
+    opacity: 1;
+    cursor: auto;
+  }
+
+  .header__saved-articles-logo {
+    background-image: url('../../images/mobile-NewsExplorer-mobile-black.svg');
+  }
+
+  .header__saved-articles-nav {
+    background-image: url('../../images/mobile-icon-menu-mobile-black.svg');
+  }
+
+  .header__nav-item {
+    font-size: 16px;
+    align-self: flex-start;
+    margin-left: 16px;
+    padding: 0;
+  }
+
+  .header__nav-item_active-white {
+    color: #fff;
+    box-shadow: none;
+  }
+
+  .header__exit-item {
+    height: 56px;
+    width: 288px;
+    background-position-x: 67px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background-position-x: 175px;
+    transition: opacity .2s linear;
+    line-height: 56px;
+  }
+
+  .header__auth-item {
+    align-self: center;
+    height: 56px;
+    width: 288px;
+    background-position-x: 67px;
+    padding: 0;
+    margin: 0;
+    line-height: 56px;
+  }
+
+  .header__exit-item_black {
+    border: 1px solid #fff;
+    background-image: url('../../images/header-icon-Union.svg');
+    color: #fff;
+  }
+
+  .header__exit-item:hover {
+    color: #fff;
+    border-color: #fff;
+    opacity: .5;
+  }
+
+  .header__nav-item_black {
+    color: #fff;
+    padding: 0 16px;
+    margin: 0;
+    opacity: .5;
+    transition: opacity .2s linear;
+  }
+
+  .header__nav-item_active-black {
+    color: #fff;
+    opacity: 1;
+    box-shadow: none;
+  }
+
+  .header__nav-item_black:hover {
+    color: #fff;
+    opacity: 1;
+  }
+
+  .overlay_active .header__saved-articles-logo {
+    background-image: url('../../images/mobile-NewsExplorer-mobile.svg');
+  }
+}
