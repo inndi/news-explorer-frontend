@@ -21,6 +21,7 @@ import Footer from '../Footer/Footer';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import * as newsApi from '../../utils/NewsApi';
 
 function App() {
   const [isAuthorized, setIsAuthorized] = useState(true);
@@ -29,8 +30,12 @@ function App() {
 
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(true);
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
+
+  const [isPreloaderOpen, setIsPreloaderOpen] = useState(false);
+  const [isNothingFoundOpen, setIsNothingFoundOpen] = useState(false);
+  const [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -78,6 +83,28 @@ function App() {
       setIsRegisterPopupOpen(true);
       setIsLoginPopupOpen(false);
     }
+  }
+
+
+  function handleSearchSubmit(keyword) {
+    // isSearchResultOpen(false);
+    // setIsNothingFoundOpen(false);
+    // console.log(keyword);
+
+    setIsPreloaderOpen(true);
+
+    newsApi.getNews(keyword)
+      .then((res) => {
+        console.log(res)
+        setIsPreloaderOpen(false);
+      })
+    // if(res){
+    //   isSearchResultOpen(true);
+    // } else {
+    //   setIsNothingFoundOpen(true);
+    // }
+    // })
+    // .catch(next)
   }
 
   return (
@@ -130,6 +157,8 @@ function App() {
               hoverBtn={hoverBookmark}
               markedBtn={markedBookmark}
               homeIsActive={homeIsActive}
+              onSearchClick={handleSearchSubmit}
+              isPreloaderOpen={isPreloaderOpen}
             />
             <Footer />
             <RegisterPopup

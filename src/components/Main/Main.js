@@ -9,15 +9,17 @@ import About from '../About/About';
 function Main(props) {
   return (
     <main className='main-content'>
-      <SearchForm />
-      <SearchResults
+      <SearchForm
+        onSearchClick={props.onSearchClick} />
+      {/* <SearchResults
         inactiveBtn={props.inactiveBtn}
         hoverBtn={props.hoverBtn}
         markedBtn={props.markedBtn}
         homeIsActive={props.homeIsActive}
-      ></SearchResults>
-      <Preloader></Preloader>
-      <NotFoundSection></NotFoundSection>
+      ></SearchResults> */}
+      {props.isPreloaderOpen ? <Preloader></Preloader> : ''}
+
+      {/* <NotFoundSection></NotFoundSection> */}
       <About />
     </main>
   )
