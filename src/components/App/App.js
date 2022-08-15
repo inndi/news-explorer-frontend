@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Favicon from "react-favicon";
 
@@ -36,6 +36,8 @@ function App() {
   const [isPreloaderOpen, setIsPreloaderOpen] = useState(false);
   const [isNothingFoundOpen, setIsNothingFoundOpen] = useState(false);
   const [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
+
+  const [newsCards, setNewsCards] = useState([]);
 
   const navigate = useNavigate();
 
@@ -86,26 +88,40 @@ function App() {
   }
 
 
+  const postsPerPage = 3;
+  let arrayForHoldingPosts = [];
+
+  const [moreCards, setMoreCards] = useState([]);
+  const [next, setNext] = useState(3);
+
+
   function handleSearchSubmit(keyword) {
-    // isSearchResultOpen(false);
-    // setIsNothingFoundOpen(false);
+    setIsSearchResultOpen(false);
+    setIsNothingFoundOpen(false);
+
     // console.log(keyword);
 
     setIsPreloaderOpen(true);
 
     newsApi.getNews(keyword)
-      .then((res) => {
-        console.log(res)
+      .then((newsCards) => {
+
+        console.log(newsCards)
+
         setIsPreloaderOpen(false);
+        if (newsCards.totalResults !== 0) {
+          setIsSearchResultOpen(true);
+          setNewsCards(newsCards.articles);
+        } else {
+          setIsNothingFoundOpen(true);
+        }
+
       })
-    // if(res){
-    //   isSearchResultOpen(true);
-    // } else {
-    //   setIsNothingFoundOpen(true);
-    // }
-    // })
     // .catch(next)
   }
+
+
+
 
   return (
     <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
@@ -159,6 +175,9 @@ function App() {
               homeIsActive={homeIsActive}
               onSearchClick={handleSearchSubmit}
               isPreloaderOpen={isPreloaderOpen}
+              isSearchResultOpen={isSearchResultOpen}
+              isNothingFoundOpen={isNothingFoundOpen}
+              newsCards={newsCards}
             />
             <Footer />
             <RegisterPopup

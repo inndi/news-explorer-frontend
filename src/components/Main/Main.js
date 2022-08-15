@@ -11,15 +11,18 @@ function Main(props) {
     <main className='main-content'>
       <SearchForm
         onSearchClick={props.onSearchClick} />
-      {/* <SearchResults
+
+      {props.isSearchResultOpen ? <SearchResults
         inactiveBtn={props.inactiveBtn}
         hoverBtn={props.hoverBtn}
         markedBtn={props.markedBtn}
         homeIsActive={props.homeIsActive}
-      ></SearchResults> */}
-      {props.isPreloaderOpen ? <Preloader></Preloader> : ''}
+        newsCards={props.newsCards}
+      /> : ''}
 
-      {/* <NotFoundSection></NotFoundSection> */}
+      {props.isPreloaderOpen ? <Preloader /> : ''}
+
+      {props.isNothingFoundOpen ? <NotFoundSection /> : ''}
       <About />
     </main>
   )

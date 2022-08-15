@@ -4,14 +4,20 @@
 }
 
 .card__image-container {
-  max-height: 272px;
-  margin-bottom: -5px;
+  height: 272px;
+  /* margin-bottom: -5px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* height: 43.22%; */
 }
 
 .card__image {
   border-radius: 16px 16px 0 0;
   width: 100%;
-  height: auto;
+  height: 272px;
+  /* height: auto; */
+  object-fit: cover;
+  padding-bottom: -100%;
 }
 
 .card__item_absolute {
@@ -59,6 +65,7 @@
 }
 
 .card__info-box {
+  height: min-content;
   padding: 17px 24px 24px;
   background-color: #fff;
   border-radius: 0 0 16px 16px;
