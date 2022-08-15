@@ -22,6 +22,7 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import * as newsApi from '../../utils/NewsApi';
+let arrayForHoldingNewsCards = [];
 
 function App() {
   const [isAuthorized, setIsAuthorized] = useState(true);
@@ -38,6 +39,9 @@ function App() {
   const [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
 
   const [newsCards, setNewsCards] = useState([]);
+
+  const [moreCards, setMoreCards] = useState([]);
+  const [nextAmountOfCards, setNextAmountOfCards] = useState(3);
 
   const navigate = useNavigate();
 
@@ -88,19 +92,10 @@ function App() {
   }
 
 
-  const postsPerPage = 3;
-  let arrayForHoldingPosts = [];
-
-  const [moreCards, setMoreCards] = useState([]);
-  const [next, setNext] = useState(3);
-
-
   function handleSearchSubmit(keyword) {
     setIsSearchResultOpen(false);
     setIsNothingFoundOpen(false);
-
-    // console.log(keyword);
-
+    arrayForHoldingNewsCards = [];
     setIsPreloaderOpen(true);
 
     newsApi.getNews(keyword)
@@ -120,8 +115,16 @@ function App() {
     // .catch(next)
   }
 
+  function addMoreCards(start, end) {
+    const slicedPosts = newsCards.slice(start, end);
+    arrayForHoldingNewsCards = [...arrayForHoldingNewsCards, ...slicedPosts];
+    return arrayForHoldingNewsCards;
+  };
 
-
+  function handleShowMoreClick() {
+    setMoreCards(addMoreCards(nextAmountOfCards, nextAmountOfCards + 3));
+    setNextAmountOfCards(nextAmountOfCards + 3);
+  };
 
   return (
     <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
@@ -178,6 +181,8 @@ function App() {
               isSearchResultOpen={isSearchResultOpen}
               isNothingFoundOpen={isNothingFoundOpen}
               newsCards={newsCards}
+              handleShowMoreClick={handleShowMoreClick}
+              moreCards={moreCards}
             />
             <Footer />
             <RegisterPopup

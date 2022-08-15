@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import NewsCardList from '../NewsCardList/NewsCardList';
 
-let arrayForHoldingPosts = [];
+import NewsCardList from '../NewsCardList/NewsCardList';
 
 function SearchResults(props) {
   const [isMore, setIsMore] = useState(false);
 
-  const [moreCards, setMoreCards] = useState([]);
-  const [next, setNext] = useState(3);
-
-  const loopWithSlice = (start, end) => {
-    const slicedPosts = props.newsCards.slice(start, end);
-    arrayForHoldingPosts = [...arrayForHoldingPosts, ...slicedPosts];
-    setMoreCards(arrayForHoldingPosts);
-  };
-
   const handleShowMorePosts = () => {
-    loopWithSlice(next, next + 3);
-    setNext(next + 3);
+    props.handleShowMoreClick();
     setIsMore(true);
   };
-
 
   return (
     <section className='search-results'>
@@ -33,7 +21,7 @@ function SearchResults(props) {
         homeIsActive={props.homeIsActive}
         newsCards={props.newsCards}
 
-        moreCards={moreCards}
+        moreCards={props.moreCards}
         isMore={isMore}
 
       ></NewsCardList>
