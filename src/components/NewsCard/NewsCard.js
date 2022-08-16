@@ -35,15 +35,14 @@ function NewsCard(props) {
     setIsHover(false);
   };
 
-  const handleMouseClick = () => {
+  const handleSaveArticleClick = (e) => {
     if (props.homeIsActive && isMarked === false) {
       setIsMarked(true);
+      props.handleSaveArticleSubmit(props.newsCard);
     } else {
       setIsMarked(false);
     }
   };
-
-  // props.isAuthorized////////////////////////////////
 
   return (
     <li className='card'>
@@ -54,7 +53,7 @@ function NewsCard(props) {
       <button className='card__btn card__item_absolute' style={isMarked ? markedBoxStyle : boxStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={props.isAuthorized ? handleMouseClick : undefined}></button>
+        onClick={props.isAuthorized ? handleSaveArticleClick : undefined}></button>
       {!props.isAuthorized ? <p className='card__tooltip card__item_absolute'>{props.tooltipText}</p> : undefined}
       <div className='card__info-box'>
         <p className='card__date'>{year}</p>

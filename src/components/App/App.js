@@ -22,10 +22,13 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import * as newsApi from '../../utils/NewsApi';
+import * as mainApi from '../../utils/MainApi';
+
 let arrayForHoldingNewsCards = [];
 
+
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(true);
   const [homeIsActive, setHomeIsActive] = useState(true);
   const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(false);
 
@@ -44,6 +47,8 @@ function App() {
   const [nextAmountOfCards, setNextAmountOfCards] = useState(3);
 
   const [isReceivingError, setIsReceivingError] = useState(false);
+
+  const [keyword, setKeyword] = useState('');
 
   const navigate = useNavigate();
 
@@ -101,6 +106,7 @@ function App() {
     setIsPreloaderOpen(true);
 
     setIsReceivingError(false);
+    setKeyword(keyword);
 
     newsApi.getNews(keyword)
       .then((newsCards) => {
@@ -129,6 +135,13 @@ function App() {
     setMoreCards(addMoreCards(nextAmountOfCards, nextAmountOfCards + 3));
     setNextAmountOfCards(nextAmountOfCards + 3);
   };
+
+  function handleSaveArticleSubmit(article) {
+    console.log(keyword);
+    mainApi.postArticle(keyword, article);
+    // .then((res))
+    // .catch(next)
+  }
 
   return (
     <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
@@ -188,8 +201,10 @@ function App() {
               handleShowMoreClick={handleShowMoreClick}
               moreCards={moreCards}
 
-              isAuthorized={isAuthorized}//////////////////////////
+              isAuthorized={isAuthorized}
               isReceivingError={isReceivingError}
+
+              handleSaveArticleSubmit={handleSaveArticleSubmit}///////////////////////////////////////////
             />
             <Footer />
             <RegisterPopup

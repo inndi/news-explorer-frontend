@@ -24,7 +24,9 @@ function SearchResults(props) {
         moreCards={props.moreCards}
         isMore={isMore}
 
-        isAuthorized={props.isAuthorized} />
+        isAuthorized={props.isAuthorized}
+        handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
+      />
 
       {(props.moreCards.length < 94) ?
         <button className='search-results__more-btn' onClick={handleShowMorePosts}>Show more</button> : ''

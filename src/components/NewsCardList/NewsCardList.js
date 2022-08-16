@@ -19,6 +19,7 @@ function NewsCardList(props) {
               markedBtn={props.markedBtn}
 
               isAuthorized={props.isAuthorized}
+              handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
             />
 
 
@@ -34,7 +35,9 @@ function NewsCardList(props) {
               homeIsActive={props.homeIsActive}
               markedBtn={props.markedBtn}
 
-              isAuthorized={props.isAuthorized} />
+              isAuthorized={props.isAuthorized}
+              handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
+            />
           )) : ''
         }
       </ul>
