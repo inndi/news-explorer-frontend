@@ -1,0 +1,62 @@
+.res-err-section {
+  padding: 80px 0;
+  width: 100%;
+  background-color: #F5F6F7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.res-err-section__img {
+  width: 86px;
+  height: 86px;
+  background-image: url('../../images/ill-not-found_v1-error.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.res-err-section__title {
+  margin: 0;
+  font-family: 'Roboto-slab', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.1;
+  padding-top: 24px;
+  color: #B6BCBF;
+  max-width: 800px;
+  text-align: center;
+  padding: 0 20px;
+  padding-top: 20px;
+}
+
+@media screen and (max-width: 1106px) {
+  .res-err-section {
+    padding: 40px 0;
+  }
+
+  .res-err-section__img {
+    width: 66px;
+    height: 66px;
+  }
+
+  .res-err-section__title {
+    font-size: 20px;
+    padding-top: 18px;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .res-err-section {
+    padding: 20px 0;
+  }
+
+  .res-err-section__img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .res-err-section__title {
+    font-size: 18px;
+    padding-top: 14px;
+  }
+}

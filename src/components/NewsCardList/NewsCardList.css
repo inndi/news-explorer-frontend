@@ -9,10 +9,14 @@
   background-color: #F5F6F7;
   display: grid;
   grid-template-columns: repeat(3, minmax(288px, 400px));
-  /* grid-template-rows: auto; */
-  /* grid-template-rows: minmax(420px, 576px); */
   justify-content: center;
   grid-gap: 16px;
+}
+
+@media screen and (max-width: 1272px) {
+  .news-card__list {
+    padding: 52px 80px;
+  }
 }
 
 @media screen and (max-width: 1106px) {

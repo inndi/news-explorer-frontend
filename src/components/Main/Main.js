@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import SearchForm from '../SearchForm/SearchForm';
 import SearchResults from '../SearchResults/SearchResults';
 import Preloader from '../Preloader/Preloader';
 import NotFoundSection from '../NotFoundSection/NotFoundSection';
 import About from '../About/About';
+import ReceivingErrorSection from '../ReceivingError/ReceivingError';
 
 function Main(props) {
 
@@ -24,7 +25,11 @@ function Main(props) {
 
         handleShowMoreClick={props.handleShowMoreClick}
         moreCards={props.moreCards}
+
+        isAuthorized={props.isAuthorized}
       /> : ''}
+
+      {props.isReceivingError ? <ReceivingErrorSection /> : ''}
 
       {props.isPreloaderOpen ? <Preloader /> : ''}
 

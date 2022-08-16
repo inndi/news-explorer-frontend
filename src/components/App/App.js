@@ -25,7 +25,7 @@ import * as newsApi from '../../utils/NewsApi';
 let arrayForHoldingNewsCards = [];
 
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [homeIsActive, setHomeIsActive] = useState(true);
   const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(false);
 
@@ -42,6 +42,8 @@ function App() {
 
   const [moreCards, setMoreCards] = useState([]);
   const [nextAmountOfCards, setNextAmountOfCards] = useState(3);
+
+  const [isReceivingError, setIsReceivingError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -98,6 +100,8 @@ function App() {
     arrayForHoldingNewsCards = [];
     setIsPreloaderOpen(true);
 
+    setIsReceivingError(false);
+
     newsApi.getNews(keyword)
       .then((newsCards) => {
 
@@ -107,12 +111,12 @@ function App() {
         if (newsCards.totalResults !== 0) {
           setIsSearchResultOpen(true);
           setNewsCards(newsCards.articles);
-        } else {
+        } else if (newsCards.totalResults === 0) {
           setIsNothingFoundOpen(true);
         }
 
       })
-    // .catch(next)
+      .catch((err) => { setIsReceivingError(true); })
   }
 
   function addMoreCards(start, end) {
@@ -183,6 +187,9 @@ function App() {
               newsCards={newsCards}
               handleShowMoreClick={handleShowMoreClick}
               moreCards={moreCards}
+
+              isAuthorized={isAuthorized}//////////////////////////
+              isReceivingError={isReceivingError}
             />
             <Footer />
             <RegisterPopup

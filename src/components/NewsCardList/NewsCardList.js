@@ -16,7 +16,12 @@ function NewsCardList(props) {
               hoverBtn={props.hoverBtn}
               tooltipText={props.tooltipText}
               homeIsActive={props.homeIsActive}
-              markedBtn={props.markedBtn} />
+              markedBtn={props.markedBtn}
+
+              isAuthorized={props.isAuthorized}
+            />
+
+
           ))}
         {props.isMore ?
           props.moreCards.map((newsCard) => (
@@ -27,7 +32,9 @@ function NewsCardList(props) {
               hoverBtn={props.hoverBtn}
               tooltipText={props.tooltipText}
               homeIsActive={props.homeIsActive}
-              markedBtn={props.markedBtn} />
+              markedBtn={props.markedBtn}
+
+              isAuthorized={props.isAuthorized} />
           )) : ''
         }
       </ul>

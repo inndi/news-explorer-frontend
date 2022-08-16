@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import NewsCardList from '../NewsCardList/NewsCardList';
 
@@ -24,8 +24,11 @@ function SearchResults(props) {
         moreCards={props.moreCards}
         isMore={isMore}
 
-      ></NewsCardList>
-      <button className='search-results__more-btn' onClick={handleShowMorePosts}>Show more</button>
+        isAuthorized={props.isAuthorized} />
+
+      {(props.moreCards.length < 94) ?
+        <button className='search-results__more-btn' onClick={handleShowMorePosts}>Show more</button> : ''
+      }
     </section>
   )
 }

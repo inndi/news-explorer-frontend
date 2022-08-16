@@ -122,6 +122,12 @@
   background-image: url('../../images/header-NewsExplorerblack.svg');
 }
 
+@media screen and (max-width: 1272px) {
+  .header {
+    padding: 0 80px;
+  }
+}
+
 @media screen and (max-width: 1106px) {
   .header {
     min-height: 66px;

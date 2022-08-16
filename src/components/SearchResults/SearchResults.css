@@ -37,6 +37,16 @@
   background-color: #E8E8E8;
 }
 
+@media screen and (max-width: 1272px) {
+  .search-results {
+    padding: 80px 0;
+  }
+
+  .search-results__title {
+    padding-left: 80px;
+  }
+}
+
 @media screen and (max-width: 1106px) {
   .search-results {
     padding: 40px 0;
