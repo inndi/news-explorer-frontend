@@ -32,11 +32,11 @@ function Main(props) {
 
       /> : undefined}
 
-      {props.isReceivingError ? <ReceivingErrorSection /> : ''}
+      {props.isReceivingError ? <ReceivingErrorSection /> : undefined}
 
-      {props.isPreloaderOpen ? <Preloader /> : ''}
+      {props.isPreloaderOpen ? <Preloader /> : undefined}
 
-      {props.isNothingFoundOpen ? <NotFoundSection /> : ''}
+      {props.isNothingFoundOpen ? <NotFoundSection /> : undefined}
       <About />
     </main>
   )

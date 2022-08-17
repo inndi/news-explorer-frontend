@@ -28,7 +28,7 @@ let arrayForHoldingNewsCards = [];
 
 
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [homeIsActive, setHomeIsActive] = useState(true);
   const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(false);
 
@@ -48,8 +48,11 @@ function App() {
 
   const [isReceivingError, setIsReceivingError] = useState(false);
 
+
   // const [isMarkedArticle, setIsMarkedArticle] = useState(false);
   const [keyword, setKeyword] = useState('');
+
+  const [isSingUpError, setIsSingUpError] = useState('');/////////////////////////
 
   const navigate = useNavigate();
 
@@ -57,9 +60,27 @@ function App() {
     setIsLoginPopupOpen(true);
   }
 
-  function handleRegistrationSubmitClick() {
-    setIsRegistrationSuccessful(true);
+  function handleRegisterSubmitClick(email, password, username) {
+    mainApi.register(email, password, username)
+      .then((res) => {
+        closeAllPopups();
+        setIsInfoTooltipOpen(true);
+        setIsRegistrationSuccessful(true);
+      })
+      .catch((err) => {
+        setIsSingUpError(`${err}`);//////////////////////////////////////
+      })
+
   }
+
+  function handleLoginSubmitClick(email, password) {
+    mainApi.login(email, password)
+      .then((res) => {
+        closeAllPopups();
+        setIsAuthorized(true);
+      })
+  }
+
 
   function handleHomeClick() {
     navigate('/');
@@ -71,6 +92,7 @@ function App() {
     navigate('/saved-news');
     setSavedArticlesIsActive(true);
     setHomeIsActive(false);
+
   }
 
   function handleEliseClick() {
@@ -78,6 +100,7 @@ function App() {
     setSavedArticlesIsActive(false);
     setHomeIsActive(true);
     navigate('/');
+    localStorage.removeItem('jwt');
   }
 
   function closeAllPopups() {
@@ -187,19 +210,19 @@ function App() {
 
         <Route path='/' element={
           <div>
-            <Header
-            >{isAuthorized
-              ?
-              <ul className='header__navigation-list'>
-                <li className={`header__nav-item ${homeIsActive ? 'header__nav-item_active-white' : ''}`}>Home</li>
-                <li className='header__nav-item' onClick={handleSavedArticlesClick}>Saved articles</li>
-                <li className='header__exit-item' onClick={handleEliseClick}>Elise</li>
-              </ul>
-              :
-              <ul className='header__navigation-list'>
-                <li className='header__nav-item header__nav-item_active-white'>Home</li>
-                <li className='header__nav-item header__auth-item' onClick={handleSigninClick}>Sign in</li>
-              </ul>
+            <Header>
+              {isAuthorized
+                ?
+                <ul className='header__navigation-list'>
+                  <li className={`header__nav-item ${homeIsActive ? 'header__nav-item_active-white' : ''}`}>Home</li>
+                  <li className='header__nav-item' onClick={handleSavedArticlesClick}>Saved articles</li>
+                  <li className='header__exit-item' onClick={handleEliseClick}>Elise</li>
+                </ul>
+                :
+                <ul className='header__navigation-list'>
+                  <li className='header__nav-item header__nav-item_active-white'>Home</li>
+                  <li className='header__nav-item header__auth-item' onClick={handleSigninClick}>Sign in</li>
+                </ul>
               }
             </Header>
             <Main
@@ -219,32 +242,34 @@ function App() {
               isReceivingError={isReceivingError}
 
               handleSaveArticleSubmit={handleSaveArticleSubmit}
+
             // isMarkedArticle={isMarkedArticle}
             />
             <Footer />
+            {isRegistrationSuccessful && <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              onClose={closeAllPopups}
+              onRedirect={handleRedirectAuth}
+              title='Registration successfully completed!'
+              redirectText='Sign in'
+            />}
+
             <RegisterPopup
               isOpen={isRegisterPopupOpen}
               onClose={closeAllPopups}
               onRedirect={handleRedirectAuth}
-              onRegisterSubmit={handleRegistrationSubmitClick}
+              onRegisterSubmit={handleRegisterSubmitClick}
+              isSingUpError={isSingUpError}////////////////////////
             ></RegisterPopup>
 
             <LoginPopup
               isOpen={isLoginPopupOpen}
               onClose={closeAllPopups}
               onRedirect={handleRedirectAuth}
+              onLoginSubmit={handleLoginSubmitClick}
             ></LoginPopup>
 
-            {(isRegistrationSuccessful)
-              &&
-              <InfoTooltip
-                isOpen={isInfoTooltipOpen}
-                onClose={closeAllPopups}
-                onRedirect={handleRedirectAuth}
-                title='Registration successfully completed!'
-                redirectText='Sign in'
-              ></InfoTooltip>
-            }
+
 
 
           </div>
