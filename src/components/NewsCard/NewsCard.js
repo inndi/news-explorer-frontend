@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function NewsCard(props) {
   const [isHover, setIsHover] = useState(false);
-  const [isMarked, setIsMarked] = useState(false);
+  const [isMarkedArticle, setIsMarkedArticle] = useState(false);
 
   const boxStyle = {
     backgroundImage: isHover ? `url(${props.hoverBtn})` : `url(${props.inactiveBtn})`
@@ -35,12 +35,13 @@ function NewsCard(props) {
     setIsHover(false);
   };
 
-  const handleSaveArticleClick = (e) => {
-    if (props.homeIsActive && isMarked === false) {
-      setIsMarked(true);
+  const handleSaveArticleClick = () => {
+    if (props.homeIsActive && isMarkedArticle === false) {
       props.handleSaveArticleSubmit(props.newsCard);
-    } else {
-      setIsMarked(false);
+      setIsMarkedArticle(true);
+    }
+    else {
+      setIsMarkedArticle(false);
     }
   };
 
@@ -50,7 +51,7 @@ function NewsCard(props) {
         <img className='card__image' src={props.newsCard.urlToImage} alt={props.newsCard.title} />
       </div>
       {!props.homeIsActive && <p className='card__keyword card__item_absolute'>propsKeyword</p>}
-      <button className='card__btn card__item_absolute' style={isMarked ? markedBoxStyle : boxStyle}
+      <button className='card__btn card__item_absolute' style={isMarkedArticle ? markedBoxStyle : boxStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={props.isAuthorized ? handleSaveArticleClick : undefined}></button>

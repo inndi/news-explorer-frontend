@@ -27,9 +27,10 @@ function Main(props) {
         moreCards={props.moreCards}
 
         isAuthorized={props.isAuthorized}
-        handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
+        handleSaveArticleSubmit={props.handleSaveArticleSubmit}
+      // isMarkedArticle={props.isMarkedArticle}
 
-      /> : ''}
+      /> : undefined}
 
       {props.isReceivingError ? <ReceivingErrorSection /> : ''}
 

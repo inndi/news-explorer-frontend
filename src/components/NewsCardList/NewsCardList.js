@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import NewsCard from '../NewsCard/NewsCard';
 
 function NewsCardList(props) {
@@ -19,7 +19,9 @@ function NewsCardList(props) {
               markedBtn={props.markedBtn}
 
               isAuthorized={props.isAuthorized}
-              handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
+              handleSaveArticleSubmit={props.handleSaveArticleSubmit}
+            // isMarkedArticle={props.isMarkedArticle}
+
             />
 
 
@@ -36,9 +38,11 @@ function NewsCardList(props) {
               markedBtn={props.markedBtn}
 
               isAuthorized={props.isAuthorized}
-              handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
+              handleSaveArticleSubmit={props.handleSaveArticleSubmit}
+            // isMarkedArticle={props.isMarkedArticle}
+
             />
-          )) : ''
+          )) : undefined
         }
       </ul>
     </section>

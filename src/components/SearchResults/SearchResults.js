@@ -25,11 +25,12 @@ function SearchResults(props) {
         isMore={isMore}
 
         isAuthorized={props.isAuthorized}
-        handleSaveArticleSubmit={props.handleSaveArticleSubmit}///////////////////////////////////////////
+        handleSaveArticleSubmit={props.handleSaveArticleSubmit}
+      // isMarkedArticle={props.isMarkedArticle}
       />
 
       {(props.moreCards.length < 94) ?
-        <button className='search-results__more-btn' onClick={handleShowMorePosts}>Show more</button> : ''
+        <button className='search-results__more-btn' onClick={handleShowMorePosts}>Show more</button> : undefined
       }
     </section>
   )

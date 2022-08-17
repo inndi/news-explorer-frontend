@@ -1,4 +1,4 @@
-const MAIN_API = "http://localhost:3003";
+const MAIN_URL = "http://localhost:3003";
 
 function checkResponse(res) {
   if (res.ok) {
@@ -9,7 +9,7 @@ function checkResponse(res) {
 
 
 export const postArticle = (keyword, article) => {
-  return fetch(`${MAIN_API}/articles`, {
+  return fetch(`${MAIN_URL}/articles`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json'
@@ -19,7 +19,7 @@ export const postArticle = (keyword, article) => {
       title: article.title,
       text: article.description,
       date: article.publishedAt,
-      source: article.source,
+      source: article.source.name,
       link: article.url,
       image: article.urlToImage
     })
@@ -27,10 +27,11 @@ export const postArticle = (keyword, article) => {
     .then((res) => { return checkResponse(res) });
 }
 
-export const deleteArticle = (isSelected, articleId) => {
-  if (isSelected) {
-    fetch(`${MAIN_API}/articles/${articleId}`, {
-
-    })
-  }
+export const deleteArticle = (articleId) => {
+  return fetch(`${MAIN_URL}/articles/${articleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
 }

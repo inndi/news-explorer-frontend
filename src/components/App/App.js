@@ -48,6 +48,7 @@ function App() {
 
   const [isReceivingError, setIsReceivingError] = useState(false);
 
+  // const [isMarkedArticle, setIsMarkedArticle] = useState(false);
   const [keyword, setKeyword] = useState('');
 
   const navigate = useNavigate();
@@ -138,10 +139,23 @@ function App() {
 
   function handleSaveArticleSubmit(article) {
     console.log(keyword);
-    mainApi.postArticle(keyword, article);
-    // .then((res))
+    mainApi.postArticle(keyword, article)
+    // .then((res) => {
+    //   setIsMarkedArticle(true);
+    // })
     // .catch(next)
   }
+
+  // function handleSaveArticleSubmit(article) {
+  //   if (!homeIsActive && isMarkedArticle === true) {
+  //     setIsMarkedArticle(false);
+  //   } else {
+  //     mainApi.postArticle(keyword, article)
+  //       .then((res) => {
+  //         setIsMarkedArticle(true);
+  //       })
+  //     // .catch(next)
+  //   }
 
   return (
     <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
@@ -204,7 +218,8 @@ function App() {
               isAuthorized={isAuthorized}
               isReceivingError={isReceivingError}
 
-              handleSaveArticleSubmit={handleSaveArticleSubmit}///////////////////////////////////////////
+              handleSaveArticleSubmit={handleSaveArticleSubmit}
+            // isMarkedArticle={isMarkedArticle}
             />
             <Footer />
             <RegisterPopup
