@@ -54,13 +54,21 @@ function App() {
 
   // const [isMarkedArticle, setIsMarkedArticle] = useState(false);
 
-
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState();
   const [savedArticles, setSavedArticles] = useState([]);
 
-  const [isAuthError, setIsAuthError] = useState('');/////////////////////////
+  const [isAuthError, setIsAuthError] = useState('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      mainApi.setToken(token);
+    }
+    else {
+      tokenCheck();
+    }
+  }, [token]);
 
   function handleSigninClick() {
     setIsLoginPopupOpen(true);
@@ -74,51 +82,57 @@ function App() {
         setIsRegistrationSuccessful(true);
       })
       .catch((err) => {
-        setIsAuthError(`${err}`);//////////////////////////////////////
+        setIsAuthError(`${err}`);
       })
 
   }
 
   function handleLoginSubmitClick(email, password) {
+    if (!email || !password) {
+      return;
+    }
     mainApi.login(email, password)
       .then((res) => {
         closeAllPopups();
         setIsAuthorized(true);
+        setToken(res.token);
+        tokenCheck();
       })
       .catch((err) => {
-        setIsAuthError(`${err}`);//////////////////////////////////////
+        setIsAuthError(`${err}`);
       })
   }
 
-  function checkToken() {
+  function tokenCheck() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      mainApi.getCurrentUser(jwt)
+      if (!token) {
+        setToken(jwt);
+      }
+      setIsAuthorized(true);
+      mainApi.setToken(jwt);
+      mainApi.getCurrentUser()
         .then((res) => {
-          setIsAuthorized(true);
           currentUser = res;
-          setToken(jwt);
         })
         .catch((err) => {
           console.log(err);
-          if (isAuthorized) {
-            setIsAuthorized(false);
-          }
         });
-      mainApi.getSavedArticles(jwt)
+
+      mainApi.getSavedArticles()
         .then((res) => {
-          setSavedArticles(res);
+          setSavedArticles(res.reverse());
         })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      if (isAuthorized) {
+        setIsAuthorized(false);
+      }
     }
 
   }
-
-  useEffect(() => {
-    checkToken();
-    console.log(currentUser);
-    console.log(savedArticles);
-
-  }, [token])
 
 
   function handleHomeClick() {
@@ -132,6 +146,22 @@ function App() {
     setSavedArticlesIsActive(true);
     setHomeIsActive(false);
 
+    mainApi.getCurrentUser()
+      .then((res) => {
+        currentUser = res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    mainApi.getSavedArticles()
+      .then((res) => {
+        setSavedArticles(res.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   }
 
   function handleEliseClick() {
@@ -141,6 +171,7 @@ function App() {
     navigate('/');
     localStorage.removeItem('jwt');
     currentUser = {};
+    setToken();
   }
 
   function closeAllPopups() {
@@ -170,8 +201,6 @@ function App() {
     setIsNothingFoundOpen(false);
     arrayForHoldingNewsCards = [];
     setIsPreloaderOpen(true);
-    console.log(currentUser);////////////
-
 
     setIsReceivingError(false);
     setKeyword(keyword);
@@ -235,7 +264,9 @@ function App() {
                 <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
               </ul>
             </Header>
-            <SavedNewsHeader />
+            <SavedNewsHeader
+              name={currentUser.name}
+              savedArticles={savedArticles} />
             <NewsCardList
               inactiveBtn={inactiveTrash}
               hoverBtn={hoverTrash}

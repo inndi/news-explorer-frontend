@@ -10,6 +10,11 @@ function NewsCard(props) {
   const markedBoxStyle = {
     backgroundImage: `url(${props.markedBtn})`
   };
+
+  if (props.newsCard.date) {
+    props.newsCard.publishedAt = props.newsCard.date;
+  }
+
   const months = [
     { num: '01', name: "January" },
     { num: '02', name: "February" },
@@ -48,9 +53,9 @@ function NewsCard(props) {
   return (
     <li className='card'>
       <div className='card__image-container'>
-        <img className='card__image' src={props.newsCard.urlToImage} alt={props.newsCard.title} />
+        <img className='card__image' src={props.newsCard.urlToImage || props.newsCard.image} alt={props.newsCard.title} />
       </div>
-      {!props.homeIsActive && <p className='card__keyword card__item_absolute'>propsKeyword</p>}
+      {!props.homeIsActive && <p className='card__keyword card__item_absolute'>{props.newsCard.keyword}</p>}
       <button className='card__btn card__item_absolute' style={isMarkedArticle ? markedBoxStyle : boxStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -59,8 +64,8 @@ function NewsCard(props) {
       <div className='card__info-box'>
         <p className='card__date'>{year}</p>
         <h2 className='card__title'>{props.newsCard.title}</h2>
-        <p className='card__text'>{props.newsCard.description}</p>
-        <p className='card__source'>{props.newsCard.source.name}</p>
+        <p className='card__text'>{props.newsCard.description || props.newsCard.text}</p>
+        <p className='card__source'>{props.newsCard.source.name || props.newsCard.source}</p>
       </div>
     </li >
   )

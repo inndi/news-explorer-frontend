@@ -1,4 +1,4 @@
-const MAIN_URL = "http://localhost:3003";
+let savedToken;
 
 function checkResponse(res) {
 
@@ -10,12 +10,30 @@ function checkResponse(res) {
 }
 
 
+const api = {
+  baseUrl: "http://localhost:3003",
+  headers: {
+    "Content-Type": "application/json"
+  }
+};
+
+
+export const setToken = (token) => {
+  if (!token || savedToken === token) return;
+
+  api.headers = {
+    ...api.headers,
+    "Authorization": `Bearer ${token}`,
+  };
+  savedToken = token;
+}
+
+
+
 export const postArticle = (keyword, article) => {
-  return fetch(`${MAIN_URL}/articles`, {
+  return fetch(`${api.baseUrl}/articles`, {
     method: 'POST',
-    headers: {
-      'Content-type': 'application/json'
-    },
+    headers: api.headers,
     body: JSON.stringify({
       keyword: keyword,
       title: article.title,
@@ -30,22 +48,17 @@ export const postArticle = (keyword, article) => {
 }
 
 export const deleteArticle = (articleId) => {
-  return fetch(`${MAIN_URL}/articles/${articleId}`, {
+  return fetch(`${api.baseUrl}/articles/${articleId}`, {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    headers: api.headers
   })
     .then((res) => { return checkResponse(res) });
 }
 
 export const register = (email, password, username) => {
-  return fetch(`${MAIN_URL}/signup`, {
+  return fetch(`${api.baseUrl}/signup`, {
     method: 'POST',
-    headers: {
-      "Accept": "application/json",
-      'Content-Type': 'application/json'
-    },
+    headers: api.headers,
     body: JSON.stringify({
       email: email,
       password: password,
@@ -56,12 +69,9 @@ export const register = (email, password, username) => {
 }
 
 export const login = (email, password) => {
-  return fetch(`${MAIN_URL}/signin`, {
+  return fetch(`${api.baseUrl}/signin`, {
     method: 'POST',
-    headers: {
-      "Accept": "application/json",
-      'Content-Type': 'application/json'
-    },
+    headers: api.headers,
     body: JSON.stringify({
       email,
       password
@@ -69,7 +79,6 @@ export const login = (email, password) => {
   })
     .then((res) => { return checkResponse(res) })
     .then((data) => {
-      console.log(data);
       if (data) {
         localStorage.setItem('jwt', data.token);
         return data;
@@ -77,22 +86,16 @@ export const login = (email, password) => {
     })
 }
 
-export const getCurrentUser = (token) => {
-  return fetch(`${MAIN_URL}/users/me`, {
-    headers: {
-      'Content-Type': 'application/json',
-      "Authorization": `Bearer ${token}`
-    }
+export const getCurrentUser = () => {
+  return fetch(`${api.baseUrl}/users/me`, {
+    headers: api.headers
   })
     .then((res) => { return checkResponse(res) })
 }
 
-export const getSavedArticles = (token) => {
-  return fetch(`${MAIN_URL}/articles`, {
-    headers: {
-      'Content-Type': 'application/json',
-      "Authorization": `Bearer ${token}`
-    }
+export const getSavedArticles = () => {
+  return fetch(`${api.baseUrl}/articles`, {
+    headers: api.headers
   })
     .then((res) => { return checkResponse(res) })
 }
