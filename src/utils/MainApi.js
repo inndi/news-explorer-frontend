@@ -3,7 +3,7 @@ const MAIN_URL = "http://localhost:3003";
 function checkResponse(res) {
 
   if (res.ok) {
-    console.log(res.token);
+    // console.log(res);
     return res.json();
   }
   return Promise.reject(`Error: ${res.statusText}`);
@@ -75,4 +75,24 @@ export const login = (email, password) => {
         return data;
       }
     })
+}
+
+export const getCurrentUser = (token) => {
+  return fetch(`${MAIN_URL}/users/me`, {
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
+    }
+  })
+    .then((res) => { return checkResponse(res) })
+}
+
+export const getSavedArticles = (token) => {
+  return fetch(`${MAIN_URL}/articles`, {
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
+    }
+  })
+    .then((res) => { return checkResponse(res) })
 }

@@ -18,7 +18,8 @@ function RegisterPopup(props) {
       email={values.email}
       password={values.password}
       onLoginSubmit={props.onLoginSubmit}
-    // resetForm={resetForm}
+      resetForm={resetForm}
+      isAuthError={props.isAuthError}
     >
       <div className='popup__field-container'>
         <p className="popup__field-description">Email</p>

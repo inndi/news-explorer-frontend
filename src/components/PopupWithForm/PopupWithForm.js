@@ -24,7 +24,7 @@ function PopupWithForm(props) {
         {props.children}
         <div className="popup__error-container popup__submit-error">
 
-          <span className="popup__field-error form-field-error">{props.isSingUpError ? props.isSingUpError : ''}</span>
+          <span className="popup__field-error form-field-error">{props.isAuthError ? props.isAuthError : ''}</span>
 
         </div>
         <button className={`popup__submit-btn ${!props.isValid ? 'popup__submit-btn_disabled' : ''}`} type="submit">{props.submitText}</button>

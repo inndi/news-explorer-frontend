@@ -21,10 +21,13 @@ import Footer from '../Footer/Footer';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import * as newsApi from '../../utils/NewsApi';
 import * as mainApi from '../../utils/MainApi';
 
 let arrayForHoldingNewsCards = [];
+let currentUser = {};
+
 
 
 function App() {
@@ -47,12 +50,15 @@ function App() {
   const [nextAmountOfCards, setNextAmountOfCards] = useState(3);
 
   const [isReceivingError, setIsReceivingError] = useState(false);
-
-
-  // const [isMarkedArticle, setIsMarkedArticle] = useState(false);
   const [keyword, setKeyword] = useState('');
 
-  const [isSingUpError, setIsSingUpError] = useState('');/////////////////////////
+  // const [isMarkedArticle, setIsMarkedArticle] = useState(false);
+
+
+  const [token, setToken] = useState('');
+  const [savedArticles, setSavedArticles] = useState([]);
+
+  const [isAuthError, setIsAuthError] = useState('');/////////////////////////
 
   const navigate = useNavigate();
 
@@ -68,7 +74,7 @@ function App() {
         setIsRegistrationSuccessful(true);
       })
       .catch((err) => {
-        setIsSingUpError(`${err}`);//////////////////////////////////////
+        setIsAuthError(`${err}`);//////////////////////////////////////
       })
 
   }
@@ -79,7 +85,40 @@ function App() {
         closeAllPopups();
         setIsAuthorized(true);
       })
+      .catch((err) => {
+        setIsAuthError(`${err}`);//////////////////////////////////////
+      })
   }
+
+  function checkToken() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      mainApi.getCurrentUser(jwt)
+        .then((res) => {
+          setIsAuthorized(true);
+          currentUser = res;
+          setToken(jwt);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (isAuthorized) {
+            setIsAuthorized(false);
+          }
+        });
+      mainApi.getSavedArticles(jwt)
+        .then((res) => {
+          setSavedArticles(res);
+        })
+    }
+
+  }
+
+  useEffect(() => {
+    checkToken();
+    console.log(currentUser);
+    console.log(savedArticles);
+
+  }, [token])
 
 
   function handleHomeClick() {
@@ -101,6 +140,7 @@ function App() {
     setHomeIsActive(true);
     navigate('/');
     localStorage.removeItem('jwt');
+    currentUser = {};
   }
 
   function closeAllPopups() {
@@ -119,6 +159,8 @@ function App() {
       closeAllPopups();
       setIsRegisterPopupOpen(true);
       setIsLoginPopupOpen(false);
+    } else {
+      setIsLoginPopupOpen(true);
     }
   }
 
@@ -128,15 +170,14 @@ function App() {
     setIsNothingFoundOpen(false);
     arrayForHoldingNewsCards = [];
     setIsPreloaderOpen(true);
+    console.log(currentUser);////////////
+
 
     setIsReceivingError(false);
     setKeyword(keyword);
 
     newsApi.getNews(keyword)
       .then((newsCards) => {
-
-        console.log(newsCards)
-
         setIsPreloaderOpen(false);
         if (newsCards.totalResults !== 0) {
           setIsSearchResultOpen(true);
@@ -184,7 +225,7 @@ function App() {
     <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
       <Favicon url={favicon}></Favicon>
       <Routes>
-
+        {/* <ProtectedRoute path='/saved-news' loggedIn={isAuthorized}> */}
         <Route path='/saved-news' element={
           <div>
             <Header savedArticlesIsActive={savedArticlesIsActive}>
@@ -199,6 +240,7 @@ function App() {
               inactiveBtn={inactiveTrash}
               hoverBtn={hoverTrash}
               tooltipText='Remove from saved'
+              newsCards={savedArticles}
             >
 
             </NewsCardList>
@@ -207,6 +249,7 @@ function App() {
 
           </div>
         } />
+
 
         <Route path='/' element={
           <div>
@@ -259,7 +302,7 @@ function App() {
               onClose={closeAllPopups}
               onRedirect={handleRedirectAuth}
               onRegisterSubmit={handleRegisterSubmitClick}
-              isSingUpError={isSingUpError}////////////////////////
+              isAuthError={isAuthError}
             ></RegisterPopup>
 
             <LoginPopup
@@ -267,6 +310,7 @@ function App() {
               onClose={closeAllPopups}
               onRedirect={handleRedirectAuth}
               onLoginSubmit={handleLoginSubmitClick}
+              isAuthError={isAuthError}
             ></LoginPopup>
 
 
