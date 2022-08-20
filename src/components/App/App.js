@@ -58,6 +58,7 @@ function App() {
   const [savedArticles, setSavedArticles] = useState([]);
 
   const [isAuthError, setIsAuthError] = useState('');
+  const [topOfKeywords, setTopOfKeywords] = useState([]);
 
   const navigate = useNavigate();
 
@@ -120,8 +121,9 @@ function App() {
         });
 
       mainApi.getSavedArticles()
-        .then((res) => {
-          setSavedArticles(res.reverse());
+        .then((articles) => {
+          setSavedArticles(articles.reverse());
+          countTopOfKeywords(articles);
         })
         .catch((err) => {
           console.log(err);
@@ -134,7 +136,6 @@ function App() {
 
   }
 
-
   function handleHomeClick() {
     navigate('/');
     setHomeIsActive(true);
@@ -145,24 +146,22 @@ function App() {
     navigate('/saved-news');
     setSavedArticlesIsActive(true);
     setHomeIsActive(false);
-
-    mainApi.getCurrentUser()
-      .then((res) => {
-        currentUser = res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    mainApi.getSavedArticles()
-      .then((res) => {
-        setSavedArticles(res.reverse());
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    tokenCheck();
   }
+
+  function countTopOfKeywords(articles) {
+    let keywords = articles.map((article) => { return article.keyword });
+
+    let counts = keywords.reduce((counts, num) => {
+      counts[num] = (counts[num] || 0) + 1;
+      return counts;
+    }, {});
+
+    const result = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+
+    setTopOfKeywords(result);
+  }
+
 
   function handleEliseClick() {
     setIsAuthorized(false);
@@ -266,7 +265,8 @@ function App() {
             </Header>
             <SavedNewsHeader
               name={currentUser.name}
-              savedArticles={savedArticles} />
+              savedArticles={savedArticles}
+              topOfKeywords={topOfKeywords} />
             <NewsCardList
               inactiveBtn={inactiveTrash}
               hoverBtn={hoverTrash}
