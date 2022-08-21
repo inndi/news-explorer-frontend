@@ -26,7 +26,10 @@ function SearchResults(props) {
 
         isAuthorized={props.isAuthorized}
         handleSaveArticleSubmit={props.handleSaveArticleSubmit}
-      // isMarkedArticle={props.isMarkedArticle}
+        handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
+
+      // savedArticles={props.savedArticles}
+
       />
 
       {(props.moreCards.length < 94) ?

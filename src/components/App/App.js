@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import Favicon from "react-favicon";
 
 import '../../index.css';
@@ -52,8 +52,6 @@ function App() {
   const [isReceivingError, setIsReceivingError] = useState(false);
   const [keyword, setKeyword] = useState('');
 
-  // const [isMarkedArticle, setIsMarkedArticle] = useState(false);
-
   const [token, setToken] = useState();
   const [savedArticles, setSavedArticles] = useState([]);
 
@@ -61,6 +59,7 @@ function App() {
   const [topOfKeywords, setTopOfKeywords] = useState([]);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (token) {
@@ -69,7 +68,15 @@ function App() {
     else {
       tokenCheck();
     }
+
   }, [token]);
+
+  // useEffect(() => {
+  //   if (location.pathname === '/saved-news') {
+  //     setSavedArticlesIsActive(true);
+  //     setHomeIsActive(false);
+  //   }
+  // }, []);
 
   function handleSigninClick() {
     setIsLoginPopupOpen(true);
@@ -100,6 +107,7 @@ function App() {
         tokenCheck();
       })
       .catch((err) => {
+        console.log(err);
         setIsAuthError(`${err}`);
       })
   }
@@ -111,6 +119,11 @@ function App() {
         setToken(jwt);
       }
       setIsAuthorized(true);
+      if (location.pathname === '/saved-news') {
+        setSavedArticlesIsActive(true);
+        setHomeIsActive(false);
+      }
+
       mainApi.setToken(jwt);
       mainApi.getCurrentUser()
         .then((res) => {
@@ -128,7 +141,9 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-    } else {
+
+    }
+    else {
       if (isAuthorized) {
         setIsAuthorized(false);
       }
@@ -215,7 +230,10 @@ function App() {
         }
 
       })
-      .catch((err) => { setIsReceivingError(true); })
+      .catch((err) => {
+        console.log(err);
+        setIsReceivingError(true);
+      })
   }
 
   function addMoreCards(start, end) {
@@ -230,60 +248,77 @@ function App() {
   };
 
   function handleSaveArticleSubmit(article) {
-    console.log(keyword);
-    mainApi.postArticle(keyword, article)
-    // .then((res) => {
-    //   setIsMarkedArticle(true);
-    // })
-    // .catch(next)
+    console.log(article);
+    if (isAuthorized) {
+      mainApi.postArticle(keyword, article)
+        .catch((err) => { console.log(err) })
+    } else {
+      setIsLoginPopupOpen(true);
+    }
   }
 
-  // function handleSaveArticleSubmit(article) {
-  //   if (!homeIsActive && isMarkedArticle === true) {
-  //     setIsMarkedArticle(false);
-  //   } else {
-  //     mainApi.postArticle(keyword, article)
-  //       .then((res) => {
-  //         setIsMarkedArticle(true);
-  //       })
-  //     // .catch(next)
-  //   }
+
+  function handleDeleteArticleSubmit(currentArticle) {
+    if (isAuthorized) {
+      mainApi.getSavedArticles()
+        .then((articles) => {
+          articles = articles.filter((article) => article.link === currentArticle.url);
+          mainApi.deleteArticle(articles[articles.length - 1]._id)
+            .then((res) => {
+            })
+            .catch((err) => { console.log(err) })
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      if (savedArticlesIsActive) {
+        mainApi.deleteArticle(currentArticle._id)
+          .then((res) => {
+            const newArticles = savedArticles.filter((article) => article._id !== currentArticle._id);
+            setSavedArticles(newArticles);
+          })
+          .catch((err) => { console.log(err) })
+      }
+    }
+  }
 
   return (
-    <div className={`App ${savedArticlesIsActive ? 'app_bg-white' : 'app_bg-img'}`} >
+    <div className='App' >
       <Favicon url={favicon}></Favicon>
       <Routes>
-        {/* <ProtectedRoute path='/saved-news' loggedIn={isAuthorized}> */}
         <Route path='/saved-news' element={
-          <div>
-            <Header savedArticlesIsActive={savedArticlesIsActive}>
-              <ul className='header__navigation-list'>
-                <li className='header__nav-item header__nav-item_black' onClick={handleHomeClick}>Home</li>
-                <li className={`header__nav-item header__nav-item_black ${savedArticlesIsActive ? 'header__nav-item_active-black' : ''}`}>Saved articles</li>
-                <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
-              </ul>
-            </Header>
-            <SavedNewsHeader
-              name={currentUser.name}
-              savedArticles={savedArticles}
-              topOfKeywords={topOfKeywords} />
-            <NewsCardList
-              inactiveBtn={inactiveTrash}
-              hoverBtn={hoverTrash}
-              tooltipText='Remove from saved'
-              newsCards={savedArticles}
-            >
+          <ProtectedRoute isAuthorized={isAuthorized}>
+            <div className='savedArticles-page'>
+              <Header savedArticlesIsActive={savedArticlesIsActive}>
+                <ul className='header__navigation-list'>
+                  <li className='header__nav-item header__nav-item_black' onClick={handleHomeClick}>Home</li>
+                  <li className={`header__nav-item header__nav-item_black ${savedArticlesIsActive ? 'header__nav-item_active-black' : ''}`}>Saved articles</li>
+                  <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
+                </ul>
+              </Header>
+              <SavedNewsHeader
+                name={currentUser.name}
+                savedArticles={savedArticles}
+                topOfKeywords={topOfKeywords} />
+              <NewsCardList
+                inactiveBtn={inactiveTrash}
+                hoverBtn={hoverTrash}
+                tooltipText='Remove from saved'
+                savedArticles={savedArticles}
+                handleDeleteArticleSubmit={handleDeleteArticleSubmit}
+              >
 
-            </NewsCardList>
-            <Footer
-              handleHomeClick={handleHomeClick} />
+              </NewsCardList>
+              <Footer
+                handleHomeClick={handleHomeClick} />
 
-          </div>
+            </div>
+          </ProtectedRoute>
         } />
 
 
         <Route path='/' element={
-          <div>
+          <div className='home-page'>
             <Header>
               {isAuthorized
                 ?
@@ -316,8 +351,10 @@ function App() {
               isReceivingError={isReceivingError}
 
               handleSaveArticleSubmit={handleSaveArticleSubmit}
+              handleDeleteArticleSubmit={handleDeleteArticleSubmit}
 
-            // isMarkedArticle={isMarkedArticle}
+            // savedArticles={savedArticles}
+
             />
             <Footer />
             {isRegistrationSuccessful && <InfoTooltip

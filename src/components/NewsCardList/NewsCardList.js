@@ -8,7 +8,7 @@ function NewsCardList(props) {
         {props.homeIsActive
           ? props.newsCards.slice(0, 3).map((newsCard) => (
             <NewsCard
-              key={newsCard._id}
+              key={newsCard.url}
               newsCard={newsCard}
               inactiveBtn={props.inactiveBtn}
               hoverBtn={props.hoverBtn}
@@ -16,12 +16,14 @@ function NewsCardList(props) {
               homeIsActive={props.homeIsActive}
               markedBtn={props.markedBtn}
 
+              // savedArticles={props.savedArticles}
+
               isAuthorized={props.isAuthorized}
               handleSaveArticleSubmit={props.handleSaveArticleSubmit}
-            // isMarkedArticle={props.isMarkedArticle}
+              handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
 
             />))
-          : props.newsCards.map((newsCard) => (
+          : props.savedArticles.map((newsCard) => (
             <NewsCard
               key={newsCard._id}
               newsCard={newsCard}
@@ -33,7 +35,7 @@ function NewsCardList(props) {
 
               isAuthorized={props.isAuthorized}
               handleSaveArticleSubmit={props.handleSaveArticleSubmit}
-            // isMarkedArticle={props.isMarkedArticle}
+              handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
 
             />))
         }
@@ -41,7 +43,7 @@ function NewsCardList(props) {
         {props.isMore ?
           props.moreCards.map((newsCard) => (
             <NewsCard
-              key={newsCard._id}
+              key={newsCard.url}
               newsCard={newsCard}
               inactiveBtn={props.inactiveBtn}
               hoverBtn={props.hoverBtn}
@@ -51,7 +53,7 @@ function NewsCardList(props) {
 
               isAuthorized={props.isAuthorized}
               handleSaveArticleSubmit={props.handleSaveArticleSubmit}
-            // isMarkedArticle={props.isMarkedArticle}
+              handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
 
             />
           )) : undefined

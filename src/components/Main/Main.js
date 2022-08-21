@@ -28,7 +28,9 @@ function Main(props) {
 
         isAuthorized={props.isAuthorized}
         handleSaveArticleSubmit={props.handleSaveArticleSubmit}
-      // isMarkedArticle={props.isMarkedArticle}
+        handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
+
+      // savedArticles={props.savedArticles}
 
       /> : undefined}
 
