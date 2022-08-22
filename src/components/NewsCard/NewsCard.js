@@ -3,19 +3,20 @@ import React, { useState } from 'react';
 function NewsCard(props) {
   const [isHover, setIsHover] = useState(false);
   const [isMarkedArticle, setIsMarkedArticle] = useState(false);
+
   const boxStyle = {
     backgroundImage: isHover ? `url(${props.hoverBtn})` : `url(${props.inactiveBtn})`
   };
   const markedBoxStyle = {
     backgroundImage: `url(${props.markedBtn})`
   };
+
   const modifiedDate = modifyDate();
 
   function modifyDate() {
     if (props.newsCard.date) {
       props.newsCard.publishedAt = props.newsCard.date;
     }
-
     const months = [
       { num: '01', name: "January" },
       { num: '02', name: "February" },
@@ -48,14 +49,12 @@ function NewsCard(props) {
       setIsMarkedArticle(true);
     }
     else if ((props.homeIsActive && isMarkedArticle === true)) {
-      console.log('hi')
       props.handleDeleteArticleSubmit(props.newsCard);
       setIsMarkedArticle(false);
     };
     if (!props.homeIsActive) {
       props.handleDeleteArticleSubmit(props.newsCard);
     }
-
   };
 
   return (

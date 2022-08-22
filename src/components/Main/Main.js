@@ -13,8 +13,7 @@ function Main(props) {
     <main className='main-content'>
       <SearchForm
         onSearchClick={props.onSearchClick}
-        arrayForHoldingPosts={props.arrayForHoldingPosts}
-      />
+        arrayForHoldingPosts={props.arrayForHoldingPosts} />
 
       {props.isSearchResultOpen ? <SearchResults
         inactiveBtn={props.inactiveBtn}
@@ -28,11 +27,7 @@ function Main(props) {
 
         isAuthorized={props.isAuthorized}
         handleSaveArticleSubmit={props.handleSaveArticleSubmit}
-        handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
-
-      // savedArticles={props.savedArticles}
-
-      /> : undefined}
+        handleDeleteArticleSubmit={props.handleDeleteArticleSubmit} /> : undefined}
 
       {props.isReceivingError ? <ReceivingErrorSection /> : undefined}
 

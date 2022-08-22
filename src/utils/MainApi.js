@@ -1,101 +1,104 @@
-let savedToken;
-
-function checkResponse(res) {
-
-  if (res.ok) {
-    // console.log(res);
-    return res.json();
+class Api {
+  constructor(fetchData) {
+    this._baseUrl = fetchData.baseUrl;
+    this._headers = fetchData.headers;
+    this._token = undefined;
   }
-  return Promise.reject(`Error: ${res.statusText}`);
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  }
+
+  setToken(token) {
+    if (!token || this._token === token) return;
+
+    this._headers = {
+      ...this._headers,
+      "Authorization": `Bearer ${token}`,
+    };
+    this._token = token;
+  }
+
+  postArticle(keyword, article) {
+    return fetch(`${this._baseUrl}/articles`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        keyword: keyword,
+        title: article.title,
+        text: article.description,
+        date: article.publishedAt,
+        source: article.source.name,
+        link: article.url,
+        image: article.urlToImage
+      })
+    })
+      .then((res) => { return this._checkResponse(res) });
+  }
+
+  deleteArticle(articleId) {
+    return fetch(`${this._baseUrl}/articles/${articleId}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then((res) => { return this._checkResponse(res) });
+  }
+
+
+  register(email, password, username) {
+    return fetch(`${this._baseUrl}/signup`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        name: username
+      })
+    })
+      .then((res) => { return this._checkResponse(res) });
+  }
+
+  login(email, password) {
+    return fetch(`${this._baseUrl}/signin`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        email,
+        password
+      })
+    })
+      .then((res) => { return this._checkResponse(res) })
+      .then((data) => {
+        if (data) {
+          localStorage.setItem('jwt', data.token);
+          return data;
+        }
+      })
+  }
+
+  getCurrentUser() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
+    })
+      .then((res) => { return this._checkResponse(res) })
+  }
+
+  getSavedArticles() {
+    return fetch(`${this._baseUrl}/articles`, {
+      headers: this._headers
+    })
+      .then((res) => { return this._checkResponse(res) })
+  }
 }
 
-
-const api = {
+const mainApi = new Api({
   baseUrl: "http://localhost:3003",
   headers: {
     "Content-Type": "application/json"
   }
-};
+});
 
-
-export const setToken = (token) => {
-  if (!token || savedToken === token) return;
-
-  api.headers = {
-    ...api.headers,
-    "Authorization": `Bearer ${token}`,
-  };
-  savedToken = token;
-}
-
-
-
-export const postArticle = (keyword, article) => {
-  return fetch(`${api.baseUrl}/articles`, {
-    method: 'POST',
-    headers: api.headers,
-    body: JSON.stringify({
-      keyword: keyword,
-      title: article.title,
-      text: article.description,
-      date: article.publishedAt,
-      source: article.source.name,
-      link: article.url,
-      image: article.urlToImage
-    })
-  })
-    .then((res) => { return checkResponse(res) });
-}
-
-export const deleteArticle = (articleId) => {
-  return fetch(`${api.baseUrl}/articles/${articleId}`, {
-    method: 'DELETE',
-    headers: api.headers
-  })
-    .then((res) => { return checkResponse(res) });
-}
-
-export const register = (email, password, username) => {
-  return fetch(`${api.baseUrl}/signup`, {
-    method: 'POST',
-    headers: api.headers,
-    body: JSON.stringify({
-      email: email,
-      password: password,
-      name: username
-    })
-  })
-    .then((res) => { return checkResponse(res) });
-}
-
-export const login = (email, password) => {
-  return fetch(`${api.baseUrl}/signin`, {
-    method: 'POST',
-    headers: api.headers,
-    body: JSON.stringify({
-      email,
-      password
-    })
-  })
-    .then((res) => { return checkResponse(res) })
-    .then((data) => {
-      if (data) {
-        localStorage.setItem('jwt', data.token);
-        return data;
-      }
-    })
-}
-
-export const getCurrentUser = () => {
-  return fetch(`${api.baseUrl}/users/me`, {
-    headers: api.headers
-  })
-    .then((res) => { return checkResponse(res) })
-}
-
-export const getSavedArticles = () => {
-  return fetch(`${api.baseUrl}/articles`, {
-    headers: api.headers
-  })
-    .then((res) => { return checkResponse(res) })
-}
+export default mainApi;

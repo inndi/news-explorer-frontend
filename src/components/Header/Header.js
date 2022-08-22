@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function Header(props) {
-
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
 
   function handleMenuClick() {

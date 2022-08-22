@@ -1,16 +1,10 @@
 import React from "react";
+
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 function RegisterPopup(props) {
-
-  const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
-
-  // function handleSignUpClick(e) {
-  //   e.preventDefault();
-  //   handleSignUpSubmit(values.email, values.password, values.username);
-
-  // }
+  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation();
 
   return (
     <PopupWithForm
@@ -26,8 +20,7 @@ function RegisterPopup(props) {
       password={values.password}
       username={values.username}
       resetForm={resetForm}
-
-      isSingUpError={props.isSingUpError}////////////////////////
+      isSingUpError={props.isSingUpError}
     >
       <div className="popup__field-container">
         <p className="popup__field-description">Email</p>

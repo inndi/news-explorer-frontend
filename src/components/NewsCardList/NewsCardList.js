@@ -15,13 +15,9 @@ function NewsCardList(props) {
               tooltipText={props.tooltipText}
               homeIsActive={props.homeIsActive}
               markedBtn={props.markedBtn}
-
-              // savedArticles={props.savedArticles}
-
               isAuthorized={props.isAuthorized}
               handleSaveArticleSubmit={props.handleSaveArticleSubmit}
               handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
-
             />))
           : props.savedArticles.map((newsCard) => (
             <NewsCard
@@ -32,11 +28,9 @@ function NewsCardList(props) {
               tooltipText={props.tooltipText}
               homeIsActive={props.homeIsActive}
               markedBtn={props.markedBtn}
-
               isAuthorized={props.isAuthorized}
               handleSaveArticleSubmit={props.handleSaveArticleSubmit}
               handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
-
             />))
         }
 
@@ -50,13 +44,10 @@ function NewsCardList(props) {
               tooltipText={props.tooltipText}
               homeIsActive={props.homeIsActive}
               markedBtn={props.markedBtn}
-
               isAuthorized={props.isAuthorized}
               handleSaveArticleSubmit={props.handleSaveArticleSubmit}
               handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
-
-            />
-          )) : undefined
+            />)) : undefined
         }
       </ul>
     </section>

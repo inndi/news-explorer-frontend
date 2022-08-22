@@ -3,14 +3,11 @@ import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import Favicon from "react-favicon";
 
 import '../../index.css';
-
 import inactiveTrash from '../../images/icon-trash-inactive.svg';
 import hoverTrash from '../../images/card-icon-trash.svg';
-
 import inactiveBookmark from '../../images/card-icon-bookmark-inactive.svg';
 import hoverBookmark from '../../images/card-icon-bookmark-hover.svg';
 import markedBookmark from '../../images/icon-bookmark-marked.svg';
-
 import favicon from '../../images/Favicon.svg';
 
 import Header from '../Header/Header';
@@ -22,41 +19,39 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as newsApi from '../../utils/NewsApi';
-import * as mainApi from '../../utils/MainApi';
+// import * as mainApi from '../../utils/MainApi';
+import mainApi from '../../utils/MainApi';
 
 let arrayForHoldingNewsCards = [];
-let currentUser = {};
-
-
 
 function App() {
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(() => localStorage.getItem('jwt') ? true : false);
   const [homeIsActive, setHomeIsActive] = useState(true);
-  const [savedArticlesIsActive, setSavedArticlesIsActive] = useState(false);
 
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
+  const [isAuthError, setIsAuthError] = useState('');
+  const [isReceivingError, setIsReceivingError] = useState(false);
 
   const [isPreloaderOpen, setIsPreloaderOpen] = useState(false);
   const [isNothingFoundOpen, setIsNothingFoundOpen] = useState(false);
   const [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState({});
   const [newsCards, setNewsCards] = useState([]);
+  const [savedArticles, setSavedArticles] = useState([]);
 
   const [moreCards, setMoreCards] = useState([]);
   const [nextAmountOfCards, setNextAmountOfCards] = useState(3);
 
-  const [isReceivingError, setIsReceivingError] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const [topOfKeywords, setTopOfKeywords] = useState([]);
 
   const [token, setToken] = useState();
-  const [savedArticles, setSavedArticles] = useState([]);
-
-  const [isAuthError, setIsAuthError] = useState('');
-  const [topOfKeywords, setTopOfKeywords] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -71,26 +66,20 @@ function App() {
 
   }, [token]);
 
-  // useEffect(() => {
-  //   if (location.pathname === '/saved-news') {
-  //     setSavedArticlesIsActive(true);
-  //     setHomeIsActive(false);
-  //   }
-  // }, []);
-
   function handleSigninClick() {
     setIsLoginPopupOpen(true);
   }
 
   function handleRegisterSubmitClick(email, password, username) {
     mainApi.register(email, password, username)
-      .then((res) => {
+      .then(() => {
         closeAllPopups();
         setIsInfoTooltipOpen(true);
         setIsRegistrationSuccessful(true);
       })
       .catch((err) => {
         setIsAuthError(`${err}`);
+        console.log(err);
       })
 
   }
@@ -101,10 +90,12 @@ function App() {
     }
     mainApi.login(email, password)
       .then((res) => {
-        closeAllPopups();
-        setIsAuthorized(true);
-        setToken(res.token);
-        tokenCheck();
+        if (res.token) {
+          setIsAuthorized(true);
+          setToken(res.token);
+          tokenCheck();
+          closeAllPopups();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -118,16 +109,14 @@ function App() {
       if (!token) {
         setToken(jwt);
       }
-      setIsAuthorized(true);
       if (location.pathname === '/saved-news') {
-        setSavedArticlesIsActive(true);
         setHomeIsActive(false);
       }
-
+      setIsAuthorized(true);
       mainApi.setToken(jwt);
       mainApi.getCurrentUser()
         .then((res) => {
-          currentUser = res;
+          setCurrentUser(res);
         })
         .catch((err) => {
           console.log(err);
@@ -148,18 +137,15 @@ function App() {
         setIsAuthorized(false);
       }
     }
-
   }
 
   function handleHomeClick() {
     navigate('/');
     setHomeIsActive(true);
-    setSavedArticlesIsActive(false);
   }
 
   function handleSavedArticlesClick() {
     navigate('/saved-news');
-    setSavedArticlesIsActive(true);
     setHomeIsActive(false);
     tokenCheck();
   }
@@ -177,14 +163,12 @@ function App() {
     setTopOfKeywords(result);
   }
 
-
   function handleEliseClick() {
     setIsAuthorized(false);
-    setSavedArticlesIsActive(false);
     setHomeIsActive(true);
     navigate('/');
     localStorage.removeItem('jwt');
-    currentUser = {};
+    setCurrentUser({});
     setToken();
   }
 
@@ -209,7 +193,6 @@ function App() {
     }
   }
 
-
   function handleSearchSubmit(keyword) {
     setIsSearchResultOpen(false);
     setIsNothingFoundOpen(false);
@@ -228,7 +211,6 @@ function App() {
         } else if (newsCards.totalResults === 0) {
           setIsNothingFoundOpen(true);
         }
-
       })
       .catch((err) => {
         console.log(err);
@@ -257,21 +239,18 @@ function App() {
     }
   }
 
-
   function handleDeleteArticleSubmit(currentArticle) {
     if (isAuthorized) {
-      mainApi.getSavedArticles()
-        .then((articles) => {
-          articles = articles.filter((article) => article.link === currentArticle.url);
-          mainApi.deleteArticle(articles[articles.length - 1]._id)
-            .then((res) => {
-            })
-            .catch((err) => { console.log(err) })
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      if (savedArticlesIsActive) {
+      if (homeIsActive) {
+        mainApi.getSavedArticles()
+          .then((articles) => {
+            articles = articles.filter((article) => article.link === currentArticle.url);
+            mainApi.deleteArticle(articles[articles.length - 1]._id)
+              .catch((err) => { console.log(err) })
+          })
+          .catch((err) => { console.log(err) })
+      }
+      if (!homeIsActive) {
         mainApi.deleteArticle(currentArticle._id)
           .then((res) => {
             const newArticles = savedArticles.filter((article) => article._id !== currentArticle._id);
@@ -283,112 +262,101 @@ function App() {
   }
 
   return (
-    <div className='App' >
-      <Favicon url={favicon}></Favicon>
-      <Routes>
-        <Route path='/saved-news' element={
-          <ProtectedRoute isAuthorized={isAuthorized}>
-            <div className='savedArticles-page'>
-              <Header savedArticlesIsActive={savedArticlesIsActive}>
-                <ul className='header__navigation-list'>
-                  <li className='header__nav-item header__nav-item_black' onClick={handleHomeClick}>Home</li>
-                  <li className={`header__nav-item header__nav-item_black ${savedArticlesIsActive ? 'header__nav-item_active-black' : ''}`}>Saved articles</li>
-                  <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
-                </ul>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className='App' >
+        <Favicon url={favicon} />
+        <Routes>
+          <Route path='/saved-news' element={
+            <ProtectedRoute isAuthorized={isAuthorized}>
+              <div className='savedArticles-page'>
+                <Header savedArticlesIsActive={!homeIsActive}>
+                  <ul className='header__navigation-list'>
+                    <li className='header__nav-item header__nav-item_black' onClick={handleHomeClick}>Home</li>
+                    <li className={`header__nav-item header__nav-item_black ${!homeIsActive ? 'header__nav-item_active-black' : ''}`}>Saved articles</li>
+                    <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
+                  </ul>
+                </Header>
+                <SavedNewsHeader
+                  savedArticles={savedArticles}
+                  topOfKeywords={topOfKeywords} />
+                <NewsCardList
+                  inactiveBtn={inactiveTrash}
+                  hoverBtn={hoverTrash}
+                  tooltipText='Remove from saved'
+                  savedArticles={savedArticles}
+                  handleDeleteArticleSubmit={handleDeleteArticleSubmit} />
+
+                <Footer
+                  handleHomeClick={handleHomeClick} />
+
+              </div>
+            </ProtectedRoute>
+          } />
+
+          <Route path='/' element={
+            <div className='home-page'>
+              <Header>
+                {isAuthorized
+                  ?
+                  <ul className='header__navigation-list'>
+                    <li className={`header__nav-item ${homeIsActive ? 'header__nav-item_active-white' : ''}`}>Home</li>
+                    <li className='header__nav-item' onClick={handleSavedArticlesClick}>Saved articles</li>
+                    <li className='header__exit-item' onClick={handleEliseClick}>Elise</li>
+                  </ul>
+                  :
+                  <ul className='header__navigation-list'>
+                    <li className='header__nav-item header__nav-item_active-white'>Home</li>
+                    <li className='header__nav-item header__auth-item' onClick={handleSigninClick}>Sign in</li>
+                  </ul>
+                }
               </Header>
-              <SavedNewsHeader
-                name={currentUser.name}
-                savedArticles={savedArticles}
-                topOfKeywords={topOfKeywords} />
-              <NewsCardList
-                inactiveBtn={inactiveTrash}
-                hoverBtn={hoverTrash}
-                tooltipText='Remove from saved'
-                savedArticles={savedArticles}
-                handleDeleteArticleSubmit={handleDeleteArticleSubmit}
-              >
 
-              </NewsCardList>
-              <Footer
-                handleHomeClick={handleHomeClick} />
+              <Main
+                inactiveBtn={inactiveBookmark}
+                hoverBtn={hoverBookmark}
+                markedBtn={markedBookmark}
+                homeIsActive={homeIsActive}
+                onSearchClick={handleSearchSubmit}
+                isPreloaderOpen={isPreloaderOpen}
+                isSearchResultOpen={isSearchResultOpen}
+                isNothingFoundOpen={isNothingFoundOpen}
+                newsCards={newsCards}
+                handleShowMoreClick={handleShowMoreClick}
+                moreCards={moreCards}
 
-            </div>
-          </ProtectedRoute>
-        } />
+                isAuthorized={isAuthorized}
+                isReceivingError={isReceivingError}
 
+                handleSaveArticleSubmit={handleSaveArticleSubmit}
+                handleDeleteArticleSubmit={handleDeleteArticleSubmit} />
 
-        <Route path='/' element={
-          <div className='home-page'>
-            <Header>
-              {isAuthorized
-                ?
-                <ul className='header__navigation-list'>
-                  <li className={`header__nav-item ${homeIsActive ? 'header__nav-item_active-white' : ''}`}>Home</li>
-                  <li className='header__nav-item' onClick={handleSavedArticlesClick}>Saved articles</li>
-                  <li className='header__exit-item' onClick={handleEliseClick}>Elise</li>
-                </ul>
-                :
-                <ul className='header__navigation-list'>
-                  <li className='header__nav-item header__nav-item_active-white'>Home</li>
-                  <li className='header__nav-item header__auth-item' onClick={handleSigninClick}>Sign in</li>
-                </ul>
+              <Footer />
+              {isRegistrationSuccessful && <InfoTooltip
+                isOpen={isInfoTooltipOpen}
+                onClose={closeAllPopups}
+                onRedirect={handleRedirectAuth}
+                title='Registration successfully completed!'
+                redirectText='Sign in' />
               }
-            </Header>
-            <Main
-              inactiveBtn={inactiveBookmark}
-              hoverBtn={hoverBookmark}
-              markedBtn={markedBookmark}
-              homeIsActive={homeIsActive}
-              onSearchClick={handleSearchSubmit}
-              isPreloaderOpen={isPreloaderOpen}
-              isSearchResultOpen={isSearchResultOpen}
-              isNothingFoundOpen={isNothingFoundOpen}
-              newsCards={newsCards}
-              handleShowMoreClick={handleShowMoreClick}
-              moreCards={moreCards}
 
-              isAuthorized={isAuthorized}
-              isReceivingError={isReceivingError}
+              <RegisterPopup
+                isOpen={isRegisterPopupOpen}
+                onClose={closeAllPopups}
+                onRedirect={handleRedirectAuth}
+                onRegisterSubmit={handleRegisterSubmitClick}
+                isAuthError={isAuthError} />
 
-              handleSaveArticleSubmit={handleSaveArticleSubmit}
-              handleDeleteArticleSubmit={handleDeleteArticleSubmit}
-
-            // savedArticles={savedArticles}
-
-            />
-            <Footer />
-            {isRegistrationSuccessful && <InfoTooltip
-              isOpen={isInfoTooltipOpen}
-              onClose={closeAllPopups}
-              onRedirect={handleRedirectAuth}
-              title='Registration successfully completed!'
-              redirectText='Sign in'
-            />}
-
-            <RegisterPopup
-              isOpen={isRegisterPopupOpen}
-              onClose={closeAllPopups}
-              onRedirect={handleRedirectAuth}
-              onRegisterSubmit={handleRegisterSubmitClick}
-              isAuthError={isAuthError}
-            ></RegisterPopup>
-
-            <LoginPopup
-              isOpen={isLoginPopupOpen}
-              onClose={closeAllPopups}
-              onRedirect={handleRedirectAuth}
-              onLoginSubmit={handleLoginSubmitClick}
-              isAuthError={isAuthError}
-            ></LoginPopup>
-
-
-
-
-          </div>
-        } />
-
-      </Routes>
-    </div >
+              <LoginPopup
+                isOpen={isLoginPopupOpen}
+                onClose={closeAllPopups}
+                onRedirect={handleRedirectAuth}
+                onLoginSubmit={handleLoginSubmitClick}
+                isAuthError={isAuthError} />
+            </div>
+          } />
+        </Routes>
+      </div >
+    </CurrentUserContext.Provider >
   );
 }
 

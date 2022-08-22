@@ -20,16 +20,11 @@ function SearchResults(props) {
         tooltipText='Sign in to save articles'
         homeIsActive={props.homeIsActive}
         newsCards={props.newsCards}
-
         moreCards={props.moreCards}
         isMore={isMore}
-
         isAuthorized={props.isAuthorized}
         handleSaveArticleSubmit={props.handleSaveArticleSubmit}
         handleDeleteArticleSubmit={props.handleDeleteArticleSubmit}
-
-      // savedArticles={props.savedArticles}
-
       />
 
       {(props.moreCards.length < 94) ?

@@ -1,10 +1,10 @@
 import React from 'react';
+
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
-
 function RegisterPopup(props) {
-  const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
+  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation();
 
   return (
     <PopupWithForm

@@ -2,7 +2,6 @@ import React from 'react';
 import Popup from '../Popup/Popup';
 
 function InfoTooltip(props) {
-
   return (
     <Popup
       isOpen={props.isOpen}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
 function SearchForm(props) {
-  const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
+  const { values, handleChange } = useFormAndValidation();
 
   const [errorText, setErrorText] = useState('');
 
@@ -20,7 +20,6 @@ function SearchForm(props) {
     }
   }
 
-
   return (
     <form className='search-form'
       onSubmit={handleSearchSubmit}
@@ -32,7 +31,6 @@ function SearchForm(props) {
         <div className="search-form__error-container">
           <span className="search-form__field-error">{errorText}</span>
         </div>
-
         <input
           className='search-form__field'
           type="text"
@@ -41,7 +39,6 @@ function SearchForm(props) {
           name='searchKeyword'
           value={values.searchKeyword || ''}
           onChange={handleChange}
-          id='searchKeyword_input'/////////////////////////////
         />
         <button className='search-form__button' type='submit' onClick={handleSubmitClick}>Search</button>
       </div>
