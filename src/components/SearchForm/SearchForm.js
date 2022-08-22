@@ -9,14 +9,10 @@ function SearchForm(props) {
   function handleSearchSubmit(e) {
     e.preventDefault();
     if (values.searchKeyword) {
-      props.onSearchClick(values.searchKeyword);
-    }
-  }
-
-  function handleSubmitClick() {
-    setErrorText('❗Please enter a keyword');
-    if (values.searchKeyword) {
       setErrorText('');
+      props.onSearchClick(values.searchKeyword);
+    } else {
+      setErrorText('❗Please enter a keyword');
     }
   }
 
@@ -40,7 +36,7 @@ function SearchForm(props) {
           value={values.searchKeyword || ''}
           onChange={handleChange}
         />
-        <button className='search-form__button' type='submit' onClick={handleSubmitClick}>Search</button>
+        <button className='search-form__button' type='submit'>Search</button>
       </div>
     </form>
   )

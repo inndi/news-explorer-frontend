@@ -95,7 +95,7 @@ class Api {
 }
 
 const mainApi = new Api({
-  baseUrl: "http://localhost:3003",
+  baseUrl: "https://api.news-explorer-inndi.students.nomoredomainssbs.ru",
   headers: {
     "Content-Type": "application/json"
   }
