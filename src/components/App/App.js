@@ -21,7 +21,6 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as newsApi from '../../utils/NewsApi';
-// import * as mainApi from '../../utils/MainApi';
 import mainApi from '../../utils/MainApi';
 
 let arrayForHoldingNewsCards = [];
@@ -51,7 +50,7 @@ function App() {
   const [keyword, setKeyword] = useState('');
   const [topOfKeywords, setTopOfKeywords] = useState([]);
 
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -230,7 +229,6 @@ function App() {
   };
 
   function handleSaveArticleSubmit(article) {
-    console.log(article);
     if (isAuthorized) {
       mainApi.postArticle(keyword, article)
         .catch((err) => { console.log(err) })
@@ -252,7 +250,7 @@ function App() {
       }
       if (!homeIsActive) {
         mainApi.deleteArticle(currentArticle._id)
-          .then((res) => {
+          .then(() => {
             const newArticles = savedArticles.filter((article) => article._id !== currentArticle._id);
             setSavedArticles(newArticles);
           })

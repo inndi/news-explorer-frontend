@@ -12,7 +12,7 @@ function SavedNewsHeader(props) {
       <p className='saved-news-info__keywords-info'>By keywords:
         <span className='saved-news-info__keywords'> {props.topOfKeywords[0]}, {props.topOfKeywords[1]}
           {(props.topOfKeywords.length === 3) && `, ${props.topOfKeywords[2]}`}
-          {(props.topOfKeywords.length > 3) && `and ${props.topOfKeywords.length - 2} other`}</span>
+          {(props.topOfKeywords.length > 3) && ` and ${props.topOfKeywords.length - 2} other`}</span>
       </p>
     </section>
   )

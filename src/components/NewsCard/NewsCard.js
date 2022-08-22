@@ -46,7 +46,9 @@ function NewsCard(props) {
   const handleSaveArticleClick = () => {
     if (props.homeIsActive && isMarkedArticle === false) {
       props.handleSaveArticleSubmit(props.newsCard);
-      setIsMarkedArticle(true);
+      if (props.isAuthorized) {
+        setIsMarkedArticle(true);
+      }
     }
     else if ((props.homeIsActive && isMarkedArticle === true)) {
       props.handleDeleteArticleSubmit(props.newsCard);
