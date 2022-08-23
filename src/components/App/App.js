@@ -80,7 +80,6 @@ function App() {
         setIsAuthError(`${err}`);
         console.log(err);
       })
-
   }
 
   function handleLoginSubmitClick(email, password) {
@@ -265,13 +264,13 @@ function App() {
         <Favicon url={favicon} />
         <Routes>
           <Route path='/saved-news' element={
-            <ProtectedRoute isAuthorized={isAuthorized}>
+            <ProtectedRoute isAuthorized={isAuthorized} handleRedirectAuth={handleRedirectAuth}>
               <div className='savedArticles-page'>
                 <Header savedArticlesIsActive={!homeIsActive}>
                   <ul className='header__navigation-list'>
                     <li className='header__nav-item header__nav-item_black' onClick={handleHomeClick}>Home</li>
                     <li className={`header__nav-item header__nav-item_black ${!homeIsActive ? 'header__nav-item_active-black' : ''}`}>Saved articles</li>
-                    <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>Elise</li>
+                    <li className='header__exit-item header__exit-item_black' onClick={handleEliseClick}>{currentUser.name}</li>
                   </ul>
                 </Header>
                 <SavedNewsHeader
@@ -299,7 +298,7 @@ function App() {
                   <ul className='header__navigation-list'>
                     <li className={`header__nav-item ${homeIsActive ? 'header__nav-item_active-white' : ''}`}>Home</li>
                     <li className='header__nav-item' onClick={handleSavedArticlesClick}>Saved articles</li>
-                    <li className='header__exit-item' onClick={handleEliseClick}>Elise</li>
+                    <li className='header__exit-item' onClick={handleEliseClick}>{currentUser.name}</li>
                   </ul>
                   :
                   <ul className='header__navigation-list'>
