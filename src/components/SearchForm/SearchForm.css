@@ -68,6 +68,14 @@
   background-color: #2a65cc;
 }
 
+.search-form__field-error {
+  position: absolute;
+  top: -20px;
+  left: 12px;
+  font-size: 12.5px;
+  font-family: 'Roboto-middle', sans-serif;
+}
+
 @media screen and (max-width: 1106px) {
   .search-form {
     padding: 38px 0 48px;

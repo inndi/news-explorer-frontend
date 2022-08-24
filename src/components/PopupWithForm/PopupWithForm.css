@@ -47,6 +47,7 @@
   /* visibility: hidden;
   opacity: 0; */
   transition: opacity 0.2s linear;
+  height: 16px;
 }
 
 .popup__submit-error {
@@ -81,6 +82,7 @@
 .popup__submit-btn_disabled {
   background-color: #E6E8EB;
   color: #B6BCBF;
+  cursor: auto;
 }
 
 .popup__redirect-str {

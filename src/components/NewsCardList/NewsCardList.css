@@ -13,6 +13,12 @@
   grid-gap: 16px;
 }
 
+@media screen and (max-width: 1272px) {
+  .news-card__list {
+    padding: 52px 80px;
+  }
+}
+
 @media screen and (max-width: 1106px) {
   .news-card__list {
     padding: 32px 40px;

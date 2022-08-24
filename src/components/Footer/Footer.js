@@ -15,19 +15,19 @@ function Footer(props) {
             <Link to='/' onClick={props.handleHomeClick}>Home</Link>
           </li>
           <li className='footer__link'>
-            <a target="_blank" href="https://practicum.com/">
+            <a target="_blank" rel="noreferrer" href="https://practicum.com/">
               Practicum by Yandex
             </a>
           </li>
         </ul>
         <ul className="footer__social-media">
           <li className='footer__link'>
-            <a target="_blank" href="https://github.com/inndi">
+            <a target="_blank" rel="noreferrer" href="https://github.com/inndi">
               <img className='footer__link-img' src={githubIcon} alt="github icon" />
             </a>
           </li>
           <li className='footer__link'>
-            <a target="_blank" href="https://www.facebook.com/profile.php?id=100028541162326">
+            <a target="_blank" rel="noreferrer" href="https://www.facebook.com/profile.php?id=100028541162326">
               <img className='footer__link-img' src={fbIcon} alt="facebook icon" />
             </a>
           </li>

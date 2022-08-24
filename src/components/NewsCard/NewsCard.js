@@ -1,10 +1,40 @@
 import React, { useState } from 'react';
-import propsCardImg from '../../images/card-card-image_06.png';
 
 function NewsCard(props) {
-
   const [isHover, setIsHover] = useState(false);
-  const [isMarked, setIsMarked] = useState(false);
+  const [isMarkedArticle, setIsMarkedArticle] = useState(false);
+
+  const boxStyle = {
+    backgroundImage: isHover ? `url(${props.hoverBtn})` : `url(${props.inactiveBtn})`
+  };
+  const markedBoxStyle = {
+    backgroundImage: `url(${props.markedBtn})`
+  };
+
+  const modifiedDate = modifyDate();
+
+  function modifyDate() {
+    if (props.newsCard.date) {
+      props.newsCard.publishedAt = props.newsCard.date;
+    }
+    const months = [
+      { num: '01', name: "January" },
+      { num: '02', name: "February" },
+      { num: '03', name: "March" },
+      { num: '04', name: "April" },
+      { num: '05', name: "May" },
+      { num: '06', name: "June" },
+      { num: '07', name: "July" },
+      { num: '08', name: "August" },
+      { num: '09', name: "September" },
+      { num: '10', name: "October" },
+      { num: '11', name: "November" },
+      { num: '12', name: "December" }
+    ];
+
+    const selectedMonthName = months.find((month) => month.num === `${props.newsCard.publishedAt.slice(5, 7)}`);
+    return `${selectedMonthName.name} ${props.newsCard.publishedAt.slice(8, 10)}, ${props.newsCard.publishedAt.slice(0, 4)}`;
+  }
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -13,38 +43,38 @@ function NewsCard(props) {
     setIsHover(false);
   };
 
-  const handleMouseClick = () => {
-    if (props.homeIsActive && isMarked === false) {
-      setIsMarked(true);
-    } else {
-      setIsMarked(false);
+  const handleSaveArticleClick = () => {
+    if (props.homeIsActive && isMarkedArticle === false) {
+      props.handleSaveArticleSubmit(props.newsCard);
+      if (props.isAuthorized) {
+        setIsMarkedArticle(true);
+      }
     }
-  };
-
-  const boxStyle = {
-    backgroundImage: isHover ? `url(${props.hoverBtn})` : `url(${props.inactiveBtn})`
-  };
-
-  const markedBoxStyle = {
-    backgroundImage: `url(${props.markedBtn})`
+    else if ((props.homeIsActive && isMarkedArticle === true)) {
+      props.handleDeleteArticleSubmit(props.newsCard);
+      setIsMarkedArticle(false);
+    };
+    if (!props.homeIsActive) {
+      props.handleDeleteArticleSubmit(props.newsCard);
+    }
   };
 
   return (
     <li className='card'>
       <div className='card__image-container'>
-        <img className='card__image' src={propsCardImg} alt="props-title" />
+        <img className='card__image' src={props.newsCard.urlToImage || props.newsCard.image} alt={props.newsCard.title} />
       </div>
-      {!props.homeIsActive && <p className='card__keyword card__item_absolute'>propsKeyword</p>}
-      <button className='card__btn card__item_absolute' style={isMarked ? markedBoxStyle : boxStyle}
+      {!props.homeIsActive && <p className='card__keyword card__item_absolute'>{props.newsCard.keyword}</p>}
+      <button className='card__btn card__item_absolute' style={isMarkedArticle ? markedBoxStyle : boxStyle}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={handleMouseClick}></button>
-      <p className='card__tooltip card__item_absolute'>{props.tooltipText}</p>
+        onClick={handleSaveArticleClick}></button>
+      {!props.isAuthorized ? <p className='card__tooltip card__item_absolute'>{props.tooltipText}</p> : undefined}
       <div className='card__info-box'>
-        <p className='card__date'>November 4, 2020</p>
-        <h2 className='card__title'>Everyone Needs a Special 'Sit Spot' in Nature fffffffff fffnhyjn</h2>
-        <p className='card__text'>Ever since I read Richard Louv's influential book, "Last Child in the Woods," the idea of having a special "sit spot" has stuck with me. This advice, which Louv attributes to nature educator Jon Young, is for both adults and children to find vvvvvvvvvv</p>
-        <p className='card__source'>treehugger</p>
+        <p className='card__date'>{modifiedDate}</p>
+        <h2 className='card__title'>{props.newsCard.title}</h2>
+        <p className='card__text'>{props.newsCard.description || props.newsCard.text}</p>
+        <p className='card__source'>{props.newsCard.source.name || props.newsCard.source}</p>
       </div>
     </li >
   )

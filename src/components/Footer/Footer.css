@@ -65,6 +65,12 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 1272px) {
+  .footer__copyright {
+    padding-left: 80px;
+  }
+}
+
 @media screen and (max-width: 1106px) {
   .footer {
     min-height: 64px;

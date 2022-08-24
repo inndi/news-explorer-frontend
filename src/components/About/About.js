@@ -1,7 +1,7 @@
 import React from 'react';
 import authorAvatar from '../../images/author-avatar.png';
 
-function About(params) {
+function About(props) {
   return (
     <section className='about-author'>
       <div className='about-author__avatar-container'>
