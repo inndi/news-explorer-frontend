@@ -12,11 +12,13 @@
 .about-author__avatar-container {
   padding-left: 104px;
   grid-area: avatar;
+  /* border-radius: 50%; */
 }
 
 .about-author__avatar {
   max-width: 100%;
   height: auto;
+  border-radius: 50%;
 }
 
 .about-author__info {
